@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>16-Yr Historical Rainfall Analytics | AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</title>
+  <meta name="description" content="Comprehensive meteorological intelligence computed across 204,876 daily rainfall records (2009-2024).">
+    <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>🌧️</text></svg>">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <div class="app-shell">
+    
+    <!-- GLOBAL FIXED SIDEBAR -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-brand" title="AI-Powered Heavy Rainfall &amp; Flood Early-Warning System Command Center">
+          <div class="sidebar-logo-icon">⚡</div>
+          <div class="sidebar-logo-text">
+            <span class="logo-title-line1">AI-POWERED</span>
+            <span class="logo-title-line2">HEAVY RAINFALL</span>
+            <span class="logo-title-line3">&amp; FLOOD</span>
+            <span class="logo-title-line4">EARLY-WARNING</span>
+          </div>
+        </a>
+        <button class="sidebar-close-btn" id="btnSidebarClose" title="Close Navigation Menu">✕</button>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <a href="dashboard.html" class="nav-tab-btn" data-page="dashboard" title="Dashboard Command Overview">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="rainfall-prediction.html" class="nav-tab-btn" data-page="rainfall-prediction" title="AI Rainfall Prediction">
+          <span class="nav-icon">🌧️</span>
+          <span class="nav-label">Rainfall Prediction</span>
+        </a>
+        <a href="prediction.html" class="nav-tab-btn" data-page="prediction" title="Flood Risk Prediction">
+          <span class="nav-icon">🌊</span>
+          <span class="nav-label">Flood Prediction</span>
+        </a>
+        <a href="analytics.html" class="nav-tab-btn active" data-page="analytics" title="Historical Analytics & Model Performance">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Analytics</span>
+        </a>
+        <a href="risk-map.html" class="nav-tab-btn" data-page="risk-map" title="Interactive Geospatial Basin Mapping">
+          <span class="nav-icon">🗺️</span>
+          <span class="nav-label">Risk Map</span>
+        </a>
+        <a href="alerts.html" class="nav-tab-btn" data-page="alerts" title="Emergency Disaster Advisories">
+          <span class="nav-icon">🚨</span>
+          <span class="nav-label">Alerts</span>
+          <span class="nav-badge-pill" id="navAlertBadge">Live</span>
+        </a>
+        <a href="about.html" class="nav-tab-btn" data-page="about" title="Architecture & Model Specifications">
+          <span class="nav-icon">ℹ️</span>
+          <span class="nav-label">About</span>
+        </a>
+        <a href="login.html" class="nav-tab-btn nav-logout-btn" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-label">Logout</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-system-card">
+          <div class="system-status-indicator">
+            <span class="status-pulse-dot"></span>
+            <span>SYSTEM OPERATIONAL</span>
+          </div>
+          <div class="system-meta-text">AI Early-Warning Network</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="app-main">
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">
+            ☰
+          </button>
+          <div class="header-title-group">
+            <h1 class="header-current-title" id="headerCurrentTitle">Analytics</h1>
+            <span class="header-current-subtitle" id="headerCurrentSubtitle">16-Yr Historical Rainfall Analytics &amp; Model Performance</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div id="backendStatusPill" class="status-pill-backend" title="API Status">
+            <span class="status-pulse-dot"></span>
+            <span id="backendStatusText">Backend Connected</span>
+          </div>
+          <div class="live-clock-badge" id="liveClock">
+            --:--:-- IST
+          </div>
+          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">
+            🔄
+          </button>
+          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">
+            🔊
+          </button>
+          <div class="user-profile-badge" id="btnLogout" title="Click to Logout">
+            <div class="user-avatar">AD</div>
+            <span class="user-info-text">Admin</span>
+            <span style="font-size: 11px; color: var(--text-muted);">↪</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT BOUNDARY -->
+      <main class="page-content">
+        <div class="page-container">
+
+          <!-- PAGE TITLE SECTION -->
+          <section class="page-title-section">
+            <h1>Analytics</h1>
+            <p>Comprehensive meteorological intelligence and model performance analysis computed across historical records.</p>
+          </section>
+
+      <section class="page-content">
+
+        <!-- KPI Grid -->
+        <div class="grid-4-col">
+          <div class="stat-kpi-card">
+            <div class="stat-kpi-header">
+              <span>TOTAL RECORDS</span>
+              <span>📈</span>
+            </div>
+            <div class="stat-kpi-value" id="analyticsTotalRecords">204,876</div>
+            <div class="stat-kpi-footer">Daily Rainfall Observations</div>
+          </div>
+
+          <div class="stat-kpi-card">
+            <div class="stat-kpi-header">
+              <span>TEMPORAL COVERAGE</span>
+              <span>📅</span>
+            </div>
+            <div class="stat-kpi-value">16 Years</div>
+            <div class="stat-kpi-footer">2009 - 2024 Historical Data</div>
+          </div>
+
+          <div class="stat-kpi-card">
+            <div class="stat-kpi-header">
+              <span>STATE COVERAGE</span>
+              <span>🗺️</span>
+            </div>
+            <div class="stat-kpi-value">28 States</div>
+            <div class="stat-kpi-footer">All India Meteorological Divisions</div>
+          </div>
+
+          <div class="stat-kpi-card">
+            <div class="stat-kpi-header">
+              <span>MODEL INFERENCE ACCURACY</span>
+              <span>⚡</span>
+            </div>
+            <div class="stat-kpi-value" id="analyticsModelConfidence">96.33%</div>
+            <div class="stat-kpi-footer">Logistic Regression Classifier</div>
+          </div>
+        </div>
+
+        <!-- Monthly Rainfall Trend Chart Card -->
+        <div class="component-card">
+          <div class="component-card-title">
+            <span>📈 Monthly Rainfall Climatology Trend (2009-2024)</span>
+          </div>
+          <div style="height: 340px; width: 100%;">
+            <canvas id="chartMonthlyRainfallTrend"></canvas>
+          </div>
+        </div>
+
+        <!-- Yearly Rainfall Analysis Chart Card -->
+        <div class="component-card">
+          <div class="component-card-title">
+            <span>📊 Annual Total Rainfall Trend Across States (2009-2024)</span>
+          </div>
+          <div style="height: 340px; width: 100%;">
+            <canvas id="chartYearlyRainfallAnalysis"></canvas>
+          </div>
+        </div>
+
+        <!-- Extreme Events & Ranking Tables -->
+        <div class="grid-equal-2">
+          
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>🚨 Top Extreme Daily Rainfall Events</span>
+            </div>
+            <div class="data-table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>State</th>
+                    <th>Rainfall (mm)</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="topExtremeRainfallTableBody">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>🏆 State Rainfall Volume Ranking</span>
+            </div>
+            <div class="data-table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Rank</th>
+                    <th>State Name</th>
+                    <th>Avg Annual (mm)</th>
+                    <th>Max Daily (mm)</th>
+                  </tr>
+                </thead>
+                <tbody id="stateRainfallRankingTableBody">
+                  <!-- Injected dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+        </div><!-- /.page-container -->
+      </main><!-- /.page-content -->
+
+      <!-- GLOBAL FOOTER -->
+      <footer class="app-footer">
+        <div class="footer-container">
+          <div class="footer-left">
+            <span class="footer-title">AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</span>
+            <span class="footer-subtitle">AI/ML-based rainfall prediction, flood-risk assessment, and early-warning decision support.</span>
+          </div>
+          <div class="footer-right">
+            <span class="footer-copy">&copy; 2026 AI Early-Warning System. All rights reserved.</span>
+          </div>
+        </div>
+      </footer>
+    </div><!-- /.app-main -->
+  </div><!-- /.app-shell -->
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.app) {
+        window.app.initClock();
+        window.app.setupStatusMonitoring();
+      }
+    });
+  </script>
+</body>
+</html>

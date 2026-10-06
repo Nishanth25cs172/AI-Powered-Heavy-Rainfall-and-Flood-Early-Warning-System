@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Powered Heavy Rainfall and Flood Early-Warning System</title>
+  <meta name="description" content="An AI-powered intelligent disaster prediction and early warning platform that analyzes environmental conditions and provides real-time risk insights.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Full-Screen Hero Landing Section with Storm Image & Atmospheric Canvas -->
+  <section class="hero-landing">
+    <!-- Atmospheric Rain & Lightning Canvas -->
+    <div class="storm-canvas-container">
+      <canvas id="heroStormCanvas" class="storm-canvas"></canvas>
+    </div>
+
+    <!-- Top Header -->
+    <header class="hero-header">
+      <div class="brand-badge">
+        <div class="brand-icon-radar">⚡</div>
+        <div class="brand-title-group">
+          <h1>AI-POWERED HEAVY RAINFALL &amp; FLOOD</h1>
+          <span>EARLY-WARNING SYSTEM</span>
+        </div>
+      </div>
+
+      <div id="heroBackendStatus" class="header-status-online">
+        <span class="status-pulse-dot"></span>
+        AI SYSTEM ONLINE
+      </div>
+    </header>
+
+    <!-- Main Hero Center Grid -->
+    <div class="hero-main-container">
+      <!-- Left: Impactful Hero Text -->
+      <div class="hero-text-content">
+        <div class="hero-tag">
+          <span>●</span> Real-Time Environmental AI Monitoring
+        </div>
+        <h1 class="hero-heading">
+          AI-POWERED <span class="gradient-text">HEAVY RAINFALL &amp; FLOOD</span> EARLY-WARNING SYSTEM
+        </h1>
+        <div class="hero-subheading">
+          Predict. Detect. Alert. Protect.
+        </div>
+        <p class="hero-description">
+          An AI-powered intelligent disaster prediction and early warning platform that analyzes environmental conditions and provides real-time risk insights across hydraulic and meteorological telemetry.
+        </p>
+
+        <!-- Call to Action Buttons -->
+        <div class="hero-actions-group">
+          <button class="btn-primary-glow" onclick="handleGuestEntry()">
+            <span>⚡ Open Live Dashboard</span>
+          </button>
+          <a class="btn-secondary-glass" href="dashboard.html#analytics">
+            <span>📊 View Risk Analysis</span>
+          </a>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 16px; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">
+          <span>● ML MODEL: Random Forest Classifier</span>
+          <span>● DATASET: 10,000 Records</span>
+          <span>● LATENCY: &lt;35ms</span>
+        </div>
+      </div>
+
+      <!-- Right: Glassmorphism Command Center Portal Card -->
+      <div class="glass-portal-card">
+        <div class="portal-header">
+          <h2><span>🛡️</span> Command Center Portal</h2>
+          <p>Early-warning disaster intelligence & emergency response console</p>
+        </div>
+
+        <form id="loginForm" class="portal-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="username">OPERATOR USERNAME</label>
+            <div class="portal-input-wrap">
+              <span class="portal-input-icon">👤</span>
+              <input type="text" id="username" name="username" value="admin" required placeholder="Enter operator ID">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">SECURITY ACCESS KEY</label>
+            <div class="portal-input-wrap">
+              <span class="portal-input-icon">🔒</span>
+              <input type="password" id="password" name="password" value="admin123" required placeholder="Enter password">
+            </div>
+          </div>
+
+          <button type="submit" id="btnLoginSubmit" class="portal-btn-login">
+            Enter Command Center
+          </button>
+
+          <button type="button" class="portal-btn-demo" onclick="handleDemoLaunch()">
+            <span>⚡ 1-Click Instant Demo Access</span>
+          </button>
+
+          <div id="loginMessage" style="font-size: 12px; margin-top: 10px; text-align: center; min-height: 18px;"></div>
+        </form>
+
+        <div class="portal-footer-hint">
+          Demo Credentials: <b>admin</b> / <b>admin123</b>
+          <div style="margin-top: 6px;">
+            <a href="javascript:handleGuestEntry()" style="color: var(--text-cyan); text-decoration: underline;">
+              Explore as Public Observer (Read-Only)
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom: 4 Quick Statistics Cards -->
+    <div class="hero-stats-grid">
+      <div class="hero-stat-card">
+        <div class="stat-card-icon">📡</div>
+        <div class="stat-card-info">
+          <h3>Weather Monitoring</h3>
+          <p>Continuous telemetry tracking rainfall, river discharge, humidity and barometric gradients.</p>
+        </div>
+      </div>
+
+      <div class="hero-stat-card">
+        <div class="stat-card-icon">🧠</div>
+        <div class="stat-card-info">
+          <h3>AI Risk Prediction</h3>
+          <p>13-parameter machine learning model evaluating multi-factor flood and storm inundation risks.</p>
+        </div>
+      </div>
+
+      <div class="hero-stat-card">
+        <div class="stat-card-icon">🚨</div>
+        <div class="stat-card-info">
+          <h3>Real-Time Alerts</h3>
+          <p>Dynamic hazard severity classification with automated escalation and evacuation protocols.</p>
+        </div>
+      </div>
+
+      <div class="hero-stat-card">
+        <div class="stat-card-icon">🗺️</div>
+        <div class="stat-card-info">
+          <h3>Emergency Intelligence</h3>
+          <p>Interactive geospatial risk mapping, multi-agency hotlines, and survival guidance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System Architecture & Capabilities Section -->
+  <section style="background: var(--bg-deep); padding: 64px 32px; border-top: 1px solid var(--border-subtle);">
+    <div style="max-width: 1380px; margin: 0 auto;">
+      <div style="text-align: center; max-width: 700px; margin: 0 auto 48px;">
+        <span style="font-family: var(--font-mono); font-size: 11px; color: var(--cyan-glow); letter-spacing: 1.5px; text-transform: uppercase;">
+          Integrated Disaster Defense
+        </span>
+        <h2 style="font-family: var(--font-display); font-size: 32px; font-weight: 800; color: #fff; margin-top: 6px;">
+          Architected for Life-Saving Early Action
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 14px; margin-top: 8px;">
+          Built to provide institutional authorities with data-driven early warning confidence.
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 28px;">
+          <div style="font-size: 32px; margin-bottom: 12px;">🌧️</div>
+          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px;">
+            Inundation ML Engine
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.6;">
+            Optimized Random Forest pipeline with stratified cross-validation trained on the official project datasets: <code style="color: var(--cyan-glow); font-family: var(--font-mono);">Daily Rainfall Data - India (2009-2024).csv</code> &amp; <code style="color: var(--cyan-glow); font-family: var(--font-mono);">flood_risk.csv</code>.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 28px;">
+          <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px;">
+            Atmospheric Instability Radar
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.6;">
+            Multi-hazard correlation detecting severe storms, cyclones, lightning activity, and flash flood cloudbursts before they strike.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 28px;">
+          <div style="font-size: 32px; margin-bottom: 12px;">🛡️</div>
+          <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 8px;">
+            Incident Command Protocol
+          </h3>
+          <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.6;">
+            One-touch acknowledgment, evacuation checklists, and direct coordination with NDRF, SDRF, and District Disaster Management Units.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clean Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <h4>AI-Powered Heavy Rainfall and Flood Early-Warning System</h4>
+        <p>AI/ML-Based Integrated Decision Support &amp; Disaster Early Warning Platform</p>
+      </div>
+
+      <div class="footer-meta-pills">
+        <span class="footer-pill">Datasets: Daily Rainfall Data - India (2009–2024).csv &amp; flood_risk.csv</span>
+        <span class="footer-pill">Models: Logistic Regression &amp; Decision Tree (Unit III Syllabus)</span>
+        <span class="footer-pill" style="color: #34d399;">● Datasets Connected</span>
+        <span class="footer-pill">REST Backend: Flask 3.1</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/rain.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

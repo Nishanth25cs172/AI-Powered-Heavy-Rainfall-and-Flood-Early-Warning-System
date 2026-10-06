@@ -1,0 +1,40 @@
+<!-- GLOBAL NAVIGATION HEADER COMPONENT -->
+<header class="app-header">
+  <div class="header-container">
+    <a href="dashboard.html" class="header-brand" title="AI-Powered Heavy Rainfall &amp; Flood Early-Warning System">
+      <div class="brand-logo-icon">⚡</div>
+      <div class="brand-text-wrapper">
+        <span class="brand-text-main">AI-Powered Heavy Rainfall &amp; Flood</span>
+        <span class="brand-text-sub">Early-Warning System</span>
+      </div>
+    </a>
+
+    <button class="mobile-menu-toggle" id="btnMobileMenuToggle" aria-label="Toggle Menu" onclick="document.querySelector('.header-nav').classList.toggle('nav-open')">
+      ☰
+    </button>
+
+    <nav class="header-nav">
+      <a href="dashboard.html" class="nav-link" data-page="dashboard">
+        <span>🏠</span> <span>Dashboard</span>
+      </a>
+      <a href="rainfall-prediction.html" class="nav-link" data-page="rainfall-prediction">
+        <span>🌧️</span> <span>Rainfall Prediction</span>
+      </a>
+      <a href="prediction.html" class="nav-link" data-page="prediction">
+        <span>🌊</span> <span>Flood Prediction</span>
+      </a>
+      <a href="analytics.html" class="nav-link" data-page="analytics">
+        <span>📊</span> <span>Analytics</span>
+      </a>
+      <a href="alerts.html" class="nav-link" data-page="alerts">
+        <span>🚨</span> <span>Alerts</span>
+      </a>
+      <a href="risk-map.html" class="nav-link" data-page="risk-map">
+        <span>🗺️</span> <span>Risk Map</span>
+      </a>
+      <a href="login.html" class="nav-link nav-logout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
+        <span>🚪</span> <span>Logout</span>
+      </a>
+    </nav>
+  </div>
+</header>

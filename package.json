@@ -1,0 +1,13 @@
+{
+  "name": "ai-heavy-rainfall-and-flood-early-warning-system",
+  "version": "1.0.0",
+  "description": "AI-Powered Heavy Rainfall & Flood Early-Warning System (SIH26071)",
+  "main": "frontend/login.html",
+  "scripts": {
+    "dev": "npx -y serve . -p 5500",
+    "start": "npx -y serve . -p 5500"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

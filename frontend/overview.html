@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Overview | AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</title>
+  <meta name="description" content="Complete AI/ML-Based Integrated Heavy Rainfall Early Warning and Inundation Prediction System Project Overview.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>⚡</text></svg>">
+</head>
+<body>
+
+  <!-- Mobile Sidebar Backdrop -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <div class="app-shell">
+    
+    <!-- GLOBAL FIXED SIDEBAR -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="dashboard.html" class="sidebar-brand" title="AI-Powered Heavy Rainfall &amp; Flood Early-Warning System Command Center">
+          <div class="sidebar-logo-icon">⚡</div>
+          <div class="sidebar-logo-text">
+            <span class="logo-title-line1">AI-POWERED</span>
+            <span class="logo-title-line2">HEAVY RAINFALL</span>
+            <span class="logo-title-line3">&amp; FLOOD</span>
+            <span class="logo-title-line4">EARLY-WARNING</span>
+          </div>
+        </a>
+        <button class="sidebar-close-btn" id="btnSidebarClose" title="Close Navigation Menu">✕</button>
+      </div>
+
+      <nav class="sidebar-nav" id="sidebarNav">
+        <a href="dashboard.html" class="nav-tab-btn" data-page="dashboard" title="Dashboard Command Overview">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a href="rainfall-prediction.html" class="nav-tab-btn" data-page="rainfall-prediction" title="AI Rainfall Prediction">
+          <span class="nav-icon">🌧️</span>
+          <span class="nav-label">Rainfall Prediction</span>
+        </a>
+        <a href="prediction.html" class="nav-tab-btn" data-page="prediction" title="Flood Risk Prediction">
+          <span class="nav-icon">🌊</span>
+          <span class="nav-label">Flood Prediction</span>
+        </a>
+        <a href="analytics.html" class="nav-tab-btn" data-page="analytics" title="Historical Analytics & Model Performance">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Analytics</span>
+        </a>
+        <a href="risk-map.html" class="nav-tab-btn" data-page="risk-map" title="Interactive Geospatial Basin Mapping">
+          <span class="nav-icon">🗺️</span>
+          <span class="nav-label">Risk Map</span>
+        </a>
+        <a href="alerts.html" class="nav-tab-btn" data-page="alerts" title="Emergency Disaster Advisories">
+          <span class="nav-icon">🚨</span>
+          <span class="nav-label">Alerts</span>
+          <span class="nav-badge-pill" id="navAlertBadge">Live</span>
+        </a>
+        <a href="about.html" class="nav-tab-btn active" data-page="about" title="Architecture & Model Specifications">
+          <span class="nav-icon">ℹ️</span>
+          <span class="nav-label">About</span>
+        </a>
+        <a href="login.html" class="nav-tab-btn nav-logout-btn" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
+          <span class="nav-icon">🚪</span>
+          <span class="nav-label">Logout</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-system-card">
+          <div class="system-status-indicator">
+            <span class="status-pulse-dot"></span>
+            <span>SYSTEM OPERATIONAL</span>
+          </div>
+          <div class="system-meta-text">AI Early-Warning Network</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="app-main">
+      <!-- Top Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">
+            ☰
+          </button>
+          <div class="header-title-group">
+            <h1 class="header-current-title" id="headerCurrentTitle">About System</h1>
+            <span class="header-current-subtitle" id="headerCurrentSubtitle">System Architecture, AI/ML Approach, and Dual Datasets</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div id="backendStatusPill" class="status-pill-backend" title="API Status">
+            <span class="status-pulse-dot"></span>
+            <span id="backendStatusText">Backend Connected</span>
+          </div>
+          <div class="live-clock-badge" id="liveClock">
+            --:--:-- IST
+          </div>
+          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">
+            🔄
+          </button>
+          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">
+            🔊
+          </button>
+          <div class="user-profile-badge" id="btnLogout" title="Click to Logout">
+            <div class="user-avatar">AD</div>
+            <span class="user-info-text">Admin</span>
+            <span style="font-size: 11px; color: var(--text-muted);">↪</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT BOUNDARY -->
+      <main class="page-content">
+        <div class="page-container">
+
+          <!-- PAGE TITLE SECTION -->
+          <section class="page-title-section">
+            <h1>About System</h1>
+            <p>Integrated Heavy Rainfall Early Warning &amp; Inundation Prediction Platform System Specifications.</p>
+          </section>
+
+      <!-- PAGE-SPECIFIC CONTENT -->
+      <section class="page-content">
+
+        <!-- SECTION 1: COMPLETE PROJECT FLOW (8-STEP FLOWCHART) -->
+        <div class="component-card">
+          <div class="component-card-title">
+            <span>🔄 COMPLETE PROJECT FLOW</span>
+            <span class="status-pill-backend">
+              <span class="status-pulse-dot"></span> End-to-End Pipeline Active
+            </span>
+          </div>
+
+          <div class="project-flow-container">
+            <div class="flow-step-card">
+              <span class="flow-step-num">STEP 1</span>
+              <span class="flow-step-icon">📂</span>
+              <span class="flow-step-title">Data Collection</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step-card">
+              <span class="flow-step-num">STEP 2</span>
+              <span class="flow-step-icon">⚙️</span>
+              <span class="flow-step-title">Preprocessing</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step-card">
+              <span class="flow-step-num">STEP 3</span>
+              <span class="flow-step-icon">🔬</span>
+              <span class="flow-step-title">Feature Eng.</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step-card">
+              <span class="flow-step-num">STEP 4</span>
+              <span class="flow-step-icon">🧠</span>
+              <span class="flow-step-title">Model Inference</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step-card">
+              <span class="flow-step-num">STEP 5</span>
+              <span class="flow-step-icon">📊</span>
+              <span class="flow-step-title">Evaluation</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step-card">
+              <span class="flow-step-num">STEP 6</span>
+              <span class="flow-step-icon">⚠️</span>
+              <span class="flow-step-title">Risk Engine</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step-card">
+              <span class="flow-step-num">STEP 7</span>
+              <span class="flow-step-icon">🚨</span>
+              <span class="flow-step-title">Early Warning</span>
+            </div>
+            <span class="flow-arrow">→</span>
+
+            <div class="flow-step-card" style="border-color: var(--blue-secondary); background: var(--light-blue-bg);">
+              <span class="flow-step-num">STEP 8</span>
+              <span class="flow-step-icon">🖥️</span>
+              <span class="flow-step-title">Dashboard</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: DATASETS USED -->
+        <div class="component-card">
+          <div class="component-card-title">
+            <span>📂 OFFICIAL PROJECT DATASETS</span>
+            <span class="status-pill-backend">
+              <span class="status-pulse-dot"></span> 2 CSV Datasets Connected
+            </span>
+          </div>
+
+          <div class="grid-equal-2">
+            <!-- Dataset 1 -->
+            <div style="background: #F7FBFF; border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span style="font-family: var(--font-display); font-size: 13px; font-weight: 800; color: var(--blue-secondary);">
+                    🌧️ RAINFALL DATASET
+                  </span>
+                  <span class="risk-badge risk-low" style="font-size: 11px;">187,714 Records</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px;">
+                  Daily Rainfall Data - India (2009–2024).csv
+                </h3>
+                <div style="font-family: var(--font-mono); font-size: 12.5px; color: var(--blue-secondary); margin-bottom: 8px;">
+                  Target: Heavy_Rainfall (>= 64.5 mm/day per IMD)
+                </div>
+                <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.5; margin-bottom: 12px;">
+                  16-year daily precipitation series across 36 Indian states/sub-divisions. Features include normal rainfall, rfs index, and antecedent lags (lag_1, lag_3, lag_7).
+                </p>
+              </div>
+              <a href="rainfall-prediction.html" class="btn-primary-glow" style="padding: 8px 16px; font-size: 12.5px; text-decoration: none; text-align: center;">
+                Rainfall Prediction Module →
+              </a>
+            </div>
+
+            <!-- Dataset 2 -->
+            <div style="background: #F7FBFF; border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <span style="font-family: var(--font-display); font-size: 13px; font-weight: 800; color: #C2410C;">
+                    🌊 FLOOD RISK DATASET
+                  </span>
+                  <span class="risk-badge risk-high" style="font-size: 11px;">10,000 Records</span>
+                </div>
+                <h3 style="font-size: 17px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px;">
+                  flood_risk.csv
+                </h3>
+                <div style="font-family: var(--font-mono); font-size: 12.5px; color: #C2410C; margin-bottom: 8px;">
+                  Target: Flood Occurred (13 Environmental Features)
+                </div>
+                <p style="color: var(--text-secondary); font-size: 13px; line-height: 1.5; margin-bottom: 12px;">
+                  Hydrological watershed dataset with 13 environmental features including water stage, river discharge, soil moisture, elevation, land cover, and population density.
+                </p>
+              </div>
+              <a href="prediction.html" class="btn-primary-glow" style="padding: 8px 16px; font-size: 12.5px; text-decoration: none; text-align: center;">
+                Flood Prediction Lab →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: PREPROCESSING & FEATURE ENGINEERING -->
+        <div class="grid-equal-2">
+          
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>⚙️ IMPLEMENTED PREPROCESSING</span>
+            </div>
+            <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+              <li><b>Missing Value Imputation:</b> Climatological mean filling for `normal_filled`.</li>
+              <li><b>Categorical Encoding:</b> One-Hot Encoding for state names and soil types.</li>
+              <li><b>Normalization &amp; Scaling:</b> Standard scaling for numeric features.</li>
+              <li><b>Chronological Train/Test Split:</b> 2009–2021 (Train: 160,446) / 2022–2024 (Test: 27,268).</li>
+              <li><b>Zero Data Leakage Audit:</b> Excluded `deviation` because actual rainfall is unknown at prediction time.</li>
+            </ul>
+          </div>
+
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>🔬 ENGINEERED MODEL FEATURES</span>
+            </div>
+            <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+              <li><b>Antecedent Precipitation Lags:</b> `lag_1`, `lag_3`, `lag_7` days rainfall accumulation.</li>
+              <li><b>Cyclic Temporal Encodings:</b> Day-of-Year sine/cosine harmonics (`sin_doy`, `cos_doy`).</li>
+              <li><b>Monsoon Seasonality Indicator:</b> Binary monsoon flag (`is_monsoon`).</li>
+              <li><b>IMD Thresholding:</b> Standardized 64.5 mm/day heavy deluge classification cutoff.</li>
+              <li><b>Watershed Factors:</b> River discharge, water level stage, soil moisture %, slope, land cover.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- SECTION 4: MODEL PREDICTION PIPELINE -->
+        <div class="component-card">
+          <div class="component-card-title">
+            <span>🧠 MACHINE LEARNING PREDICTION PIPELINE</span>
+            <span style="font-size: 12px; font-family: var(--font-mono); color: var(--text-secondary);">Active Scikit-Learn Models</span>
+          </div>
+
+          <div class="grid-equal-2">
+            <div style="background: #F7FBFF; border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px;">
+              <div class="component-card-title" style="margin-bottom: 12px; padding-bottom: 8px;">
+                <span>🌧️ RAINFALL MODEL</span>
+                <span class="risk-badge risk-low" style="font-size: 11px;">Logistic Regression</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 13.5px; display: grid; grid-template-columns: 140px 10px 1fr; row-gap: 8px; margin-bottom: 16px;">
+                <span style="color: var(--text-secondary);">Target</span><span>:</span><b style="color: var(--text-dark);">HEAVY RAINFALL / NORMAL</b>
+                <span style="color: var(--text-secondary);">IMD Cutoff</span><span>:</span><b style="color: var(--blue-secondary);">>= 64.5 mm / 24h</b>
+                <span style="color: var(--text-secondary);">Inference Prob.</span><span>:</span><b style="color: var(--blue-secondary);">98.45%</b>
+              </div>
+              <a href="rainfall-prediction.html" class="btn-primary" style="width: 100%; font-size: 13px;">
+                Run Rainfall Prediction →
+              </a>
+            </div>
+
+            <div style="background: #F7FBFF; border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px;">
+              <div class="component-card-title" style="margin-bottom: 12px; padding-bottom: 8px;">
+                <span>🌊 FLOOD INUNDATION MODEL</span>
+                <span class="risk-badge risk-high" style="font-size: 11px;">Random Forest</span>
+              </div>
+              <div style="font-family: var(--font-mono); font-size: 13.5px; display: grid; grid-template-columns: 140px 10px 1fr; row-gap: 8px; margin-bottom: 16px;">
+                <span style="color: var(--text-secondary);">Target</span><span>:</span><b style="color: var(--text-dark);">FLOOD WARNING / NORMAL</b>
+                <span style="color: var(--text-secondary);">Features</span><span>:</span><b style="color: var(--blue-secondary);">13 Environmental Factors</b>
+                <span style="color: var(--text-secondary);">Inference Prob.</span><span>:</span><b style="color: #C2410C;">87.40%</b>
+              </div>
+              <a href="prediction.html" class="btn-primary" style="width: 100%; font-size: 13px;">
+                Run Flood Prediction →
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 5: MODEL PERFORMANCE METRICS -->
+        <div class="component-card">
+          <div class="component-card-title">
+            <span>📊 MEASURED MODEL PERFORMANCE METRICS</span>
+            <span style="font-size: 12px; font-family: var(--font-mono); color: var(--text-secondary);">Held-Out Test Data Metrics</span>
+          </div>
+
+          <div class="data-table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Model &amp; Primary Algorithm</th>
+                  <th>Dataset Source</th>
+                  <th>Accuracy</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                  <th>F1-Score</th>
+                  <th>ROC-AUC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Heavy Rainfall Model</b><br><span style="font-size: 11px; color: var(--text-secondary);">Logistic Regression</span></td>
+                  <td>Daily Rainfall Data - India (27,268 Test Records)</td>
+                  <td><b style="color: var(--blue-secondary);">96.33%</b></td>
+                  <td>10.19%</td>
+                  <td><b style="color: var(--risk-low-text);">95.76%</b></td>
+                  <td>18.42%</td>
+                  <td><b style="color: var(--blue-secondary);">0.9928</b></td>
+                </tr>
+                <tr>
+                  <td><b>Flood Inundation Model</b><br><span style="font-size: 11px; color: var(--text-secondary);">Random Forest Classifier</span></td>
+                  <td>flood_risk.csv (2,000 Test Records)</td>
+                  <td><b>50.60%</b></td>
+                  <td>51.11%</td>
+                  <td>52.23%</td>
+                  <td>51.66%</td>
+                  <td><b>0.5097</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 6: ARCHITECTURE & RISK LEVELS -->
+        <div class="grid-2-col">
+
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>🏗️ SYSTEM ARCHITECTURE FLOW</span>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 13px; display: flex; flex-direction: column; gap: 10px; text-align: center;">
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 10px; border-radius: 8px; font-weight: 700; color: var(--text-dark);">
+                [ USER / SENSOR TELEMETRY INPUT ]
+              </div>
+              <div style="color: var(--blue-secondary); font-weight: 800;">↓</div>
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 10px; border-radius: 8px; font-weight: 700; color: var(--text-dark);">
+                [ DATA PREPROCESSING &amp; FEATURE PIPELINE ]
+              </div>
+              <div style="color: var(--blue-secondary); font-weight: 800;">↓</div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div style="background: var(--light-blue-bg); border: 1px solid var(--border-blue); padding: 10px; border-radius: 8px; font-weight: 700; color: var(--blue-secondary); font-size: 12px;">
+                  RAINFALL MODEL<br>(Logistic Regression)
+                </div>
+                <div style="background: var(--light-blue-bg); border: 1px solid var(--border-blue); padding: 10px; border-radius: 8px; font-weight: 700; color: #C2410C; font-size: 12px;">
+                  FLOOD MODEL<br>(Random Forest)
+                </div>
+              </div>
+              <div style="color: var(--blue-secondary); font-weight: 800;">↓</div>
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 10px; border-radius: 8px; font-weight: 700; color: var(--text-dark);">
+                [ COMPOUND RISK ASSESSMENT ENGINE ]
+              </div>
+              <div style="color: var(--blue-secondary); font-weight: 800;">↓</div>
+              <div style="background: var(--light-blue-bg); border: 1px solid var(--blue-secondary); padding: 10px; border-radius: 8px; font-weight: 800; color: var(--navy-primary);">
+                [ EARLY WARNING &amp; DASHBOARD COMMAND CENTER ]
+              </div>
+            </div>
+          </div>
+
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>⚠️ RISK ASSESSMENT LEVELS</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+              <div style="background: var(--risk-low-bg); border: 1px solid var(--risk-low-border); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <b style="color: var(--risk-low-text); font-size: 14px;">LOW RISK (0–30%)</b>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Normal weather; continuous telemetry active.</div>
+                </div>
+                <span class="risk-badge risk-low">NORMAL</span>
+              </div>
+
+              <div style="background: var(--risk-mod-bg); border: 1px solid var(--risk-mod-border); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <b style="color: var(--risk-mod-text); font-size: 14px;">MODERATE RISK (31–60%)</b>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Elevated runoff; drainage monitoring advised.</div>
+                </div>
+                <span class="risk-badge risk-moderate">ADVISORY</span>
+              </div>
+
+              <div style="background: var(--risk-high-bg); border: 1px solid var(--risk-high-border); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <b style="color: var(--risk-high-text); font-size: 14px;">HIGH RISK (61–85%)</b>
+                  <div style="font-size: 12px; color: var(--text-secondary);">High inundation threat; evacuation readiness.</div>
+                </div>
+                <span class="risk-badge risk-high">WATCH</span>
+              </div>
+
+              <div style="background: var(--risk-crit-bg); border: 1px solid var(--risk-crit-border); padding: 12px 16px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <b style="color: var(--risk-crit-text); font-size: 14px;">CRITICAL RISK (86–100%)</b>
+                  <div style="font-size: 12px; color: var(--text-secondary);">Severe deluge; immediate emergency response.</div>
+                </div>
+                <span class="risk-badge risk-critical">ALERT</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SECTION 7: TECH STACK & AI CONCEPTS -->
+        <div class="grid-2-col">
+
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>💻 TECHNOLOGY STACK</span>
+            </div>
+            <div class="grid-equal-2" style="font-family: var(--font-mono); font-size: 13px;">
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 12px; border-radius: 8px;">
+                <b style="color: var(--navy-primary);">Python 3.10+</b>
+                <div style="font-size: 11px; color: var(--text-secondary);">Core Backend Logic</div>
+              </div>
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 12px; border-radius: 8px;">
+                <b style="color: var(--navy-primary);">Flask 3.1</b>
+                <div style="font-size: 11px; color: var(--text-secondary);">REST API Server</div>
+              </div>
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 12px; border-radius: 8px;">
+                <b style="color: var(--navy-primary);">Scikit-Learn</b>
+                <div style="font-size: 11px; color: var(--text-secondary);">ML Modeling Pipeline</div>
+              </div>
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 12px; border-radius: 8px;">
+                <b style="color: var(--navy-primary);">Pandas &amp; NumPy</b>
+                <div style="font-size: 11px; color: var(--text-secondary);">Data Processing</div>
+              </div>
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 12px; border-radius: 8px;">
+                <b style="color: var(--navy-primary);">Chart.js 4.4</b>
+                <div style="font-size: 11px; color: var(--text-secondary);">Telemetry Charts</div>
+              </div>
+              <div style="background: #F7FBFF; border: 1px solid var(--border-blue); padding: 12px; border-radius: 8px;">
+                <b style="color: var(--navy-primary);">Leaflet.js 1.9</b>
+                <div style="font-size: 11px; color: var(--text-secondary);">Interactive GIS Maps</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="component-card">
+            <div class="component-card-title">
+              <span>🧠 AI/ML CONCEPTS USED</span>
+            </div>
+            <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+              <li><b>Supervised Binary Classification:</b> Logistic Regression &amp; Random Forest Classifiers.</li>
+              <li><b>Temporal Validation Split:</b> Chronological train/test split preserving sequence integrity.</li>
+              <li><b>Zero Data Leakage Audit:</b> Strict feature exclusion to avoid target contamination.</li>
+              <li><b>Imbalanced Class Evaluation:</b> ROC-AUC, Recall, and Precision benchmarking.</li>
+              <li><b>Decision Support Systems:</b> Multi-parameter compound risk index mapping.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        </div><!-- /.page-container -->
+      </main><!-- /.page-content -->
+
+      <!-- GLOBAL FOOTER -->
+      <footer class="app-footer">
+        <div class="footer-container">
+          <div class="footer-left">
+            <span class="footer-title">AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</span>
+            <span class="footer-subtitle">AI/ML-based rainfall prediction, flood-risk assessment, and early-warning decision support.</span>
+          </div>
+          <div class="footer-right">
+            <span class="footer-copy">&copy; 2026 AI Early-Warning System. All rights reserved.</span>
+          </div>
+        </div>
+      </footer>
+    </div><!-- /.app-main -->
+  </div><!-- /.app-shell -->
+
+  <!-- Application Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.app) {
+        window.app.initClock();
+        window.app.setupStatusMonitoring();
+      }
+    });
+  </script>
+</body>
+</html>

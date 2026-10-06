@@ -1,0 +1,13 @@
+{
+  "name": "ai-disaster-warning-frontend",
+  "version": "1.0.0",
+  "description": "AI-Powered Heavy Rainfall & Flood Early-Warning System Frontend",
+  "main": "login.html",
+  "scripts": {
+    "dev": "npx -y serve . -p 3000",
+    "start": "npx -y serve . -p 3000"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

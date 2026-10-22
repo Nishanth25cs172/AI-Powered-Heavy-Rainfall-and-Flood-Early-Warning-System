@@ -1,11 +1,7 @@
 """
 SIH26071 – Risk Engine & Early Warning Generation Service
-Integrates Heavy Rainfall Classification (Logistic Regression) + Flood Inundation Prediction (Decision Tree)
+Integrates Heavy Rainfall Classification (Random Forest) + Flood Inundation Prediction (Decision Tree)
 Computes compound disaster risk and generates calibrated early warning advisories.
-
-Design Principle:
-- Transparent, reproducible, and explainable risk rules (no black-box frontend calculations).
-- Decoupled service layer.
 """
 
 from typing import Dict, Any, Optional

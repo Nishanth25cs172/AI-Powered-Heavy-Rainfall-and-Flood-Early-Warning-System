@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Overview | AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</title>
   <meta name="description" content="Complete AI/ML-Based Integrated Heavy Rainfall Early Warning and Inundation Prediction System Project Overview.">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <script src="js/chart.umd.min.js"></script>
+  <script src="js/leaflet.js"></script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>⚡</text></svg>">
 </head>
 <body>
@@ -18,7 +21,7 @@
     <!-- GLOBAL FIXED SIDEBAR -->
     <aside class="app-sidebar" id="appSidebar">
       <div class="sidebar-header">
-        <a href="dashboard.html" class="sidebar-brand" title="AI-Powered Heavy Rainfall &amp; Flood Early-Warning System Command Center">
+        <a href="dashboard.html" class="sidebar-brand" title="Early Warning Dashboard">
           <div class="sidebar-logo-icon">⚡</div>
           <div class="sidebar-logo-text">
             <span class="logo-title-line1">AI-POWERED</span>
@@ -60,19 +63,20 @@
           <span class="nav-icon">ℹ️</span>
           <span class="nav-label">About</span>
         </a>
-        <a href="login.html" class="nav-tab-btn nav-logout-btn" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
-          <span class="nav-icon">🚪</span>
-          <span class="nav-label">Logout</span>
-        </a>
       </nav>
 
       <div class="sidebar-footer">
         <div class="sidebar-system-card">
-          <div class="system-status-indicator">
-            <span class="status-pulse-dot"></span>
-            <span>SYSTEM OPERATIONAL</span>
+          <div class="sidebar-system-info">
+            <div class="system-status-indicator">
+              <span class="status-pulse-dot"></span>
+              <span>SYSTEM OPERATIONAL</span>
+            </div>
+            <div class="system-meta-text">AI Early-Warning Network</div>
           </div>
-          <div class="system-meta-text">AI Early-Warning Network</div>
+          <a href="login.html" class="sidebar-logout-action" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
+            <span>🚪</span> <span>Logout</span>
+          </a>
         </div>
       </div>
     </aside>
@@ -82,30 +86,24 @@
       <!-- Top Header -->
       <header class="app-header">
         <div class="header-left">
-          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">
-            ☰
-          </button>
+          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">☰</button>
           <div class="header-title-group">
-            <h1 class="header-current-title" id="headerCurrentTitle">About System</h1>
-            <span class="header-current-subtitle" id="headerCurrentSubtitle">System Architecture, AI/ML Approach, and Dual Datasets</span>
+            <h1 class="header-current-title" id="headerCurrentTitle">Early Warning Dashboard</h1>
+            <span class="header-current-subtitle" id="headerCurrentSubtitle">Monitor rainfall conditions, flood risk and early-warning information in one place.</span>
           </div>
         </div>
 
         <div class="header-right">
+          <div style="display: flex; gap: 12px; align-items: center; white-space: nowrap; flex-wrap: nowrap; flex-shrink: 0;">
           <div id="backendStatusPill" class="status-pill-backend" title="API Status">
             <span class="status-pulse-dot"></span>
             <span id="backendStatusText">Backend Connected</span>
           </div>
-          <div class="live-clock-badge" id="liveClock">
-            --:--:-- IST
-          </div>
-          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">
-            🔄
-          </button>
-          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">
-            🔊
-          </button>
-          <div class="user-profile-badge" id="btnLogout" title="Click to Logout">
+          <div class="live-clock-badge" id="liveClock">--:--:-- IST</div>
+        </div>
+          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">🔄</button>
+          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">🔊</button>
+          <div class="user-profile-badge" id="btnLogout" title="Click to Logout" onclick="localStorage.removeItem('sih_login'); window.location.href='login.html';">
             <div class="user-avatar">AD</div>
             <span class="user-info-text">Admin</span>
             <span style="font-size: 11px; color: var(--text-muted);">↪</span>
@@ -288,19 +286,16 @@
         <div class="component-card">
           <div class="component-card-title">
             <span>🧠 MACHINE LEARNING PREDICTION PIPELINE</span>
-            <span style="font-size: 12px; font-family: var(--font-mono); color: var(--text-secondary);">Active Scikit-Learn Models</span>
-          </div>
-
-          <div class="grid-equal-2">
+            <span style="font-size:          <div class="grid-equal-2">
             <div style="background: #F7FBFF; border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px;">
               <div class="component-card-title" style="margin-bottom: 12px; padding-bottom: 8px;">
                 <span>🌧️ RAINFALL MODEL</span>
-                <span class="risk-badge risk-low" style="font-size: 11px;">Logistic Regression</span>
+                <span class="risk-badge risk-low" style="font-size: 11px;">Random Forest Classifier</span>
               </div>
               <div style="font-family: var(--font-mono); font-size: 13.5px; display: grid; grid-template-columns: 140px 10px 1fr; row-gap: 8px; margin-bottom: 16px;">
                 <span style="color: var(--text-secondary);">Target</span><span>:</span><b style="color: var(--text-dark);">HEAVY RAINFALL / NORMAL</b>
-                <span style="color: var(--text-secondary);">IMD Cutoff</span><span>:</span><b style="color: var(--blue-secondary);">>= 64.5 mm / 24h</b>
-                <span style="color: var(--text-secondary);">Inference Prob.</span><span>:</span><b style="color: var(--blue-secondary);">98.45%</b>
+                <span style="color: var(--text-secondary);">IMD Cutoff</span><span>:</span><b style="color: var(--blue-secondary);">&ge; 64.5 mm / 24h</b>
+                <span style="color: var(--text-secondary);">Accuracy</span><span>:</span><b style="color: var(--blue-secondary);">97.11%</b>
               </div>
               <a href="rainfall-prediction.html" class="btn-primary" style="width: 100%; font-size: 13px;">
                 Run Rainfall Prediction →
@@ -310,12 +305,12 @@
             <div style="background: #F7FBFF; border: 1px solid var(--border-blue); border-radius: 12px; padding: 20px;">
               <div class="component-card-title" style="margin-bottom: 12px; padding-bottom: 8px;">
                 <span>🌊 FLOOD INUNDATION MODEL</span>
-                <span class="risk-badge risk-high" style="font-size: 11px;">Random Forest</span>
+                <span class="risk-badge risk-high" style="font-size: 11px;">Decision Tree Classifier</span>
               </div>
               <div style="font-family: var(--font-mono); font-size: 13.5px; display: grid; grid-template-columns: 140px 10px 1fr; row-gap: 8px; margin-bottom: 16px;">
-                <span style="color: var(--text-secondary);">Target</span><span>:</span><b style="color: var(--text-dark);">FLOOD WARNING / NORMAL</b>
+                <span style="color: var(--text-secondary);">Target</span><span>:</span><b style="color: var(--text-dark);">FLOOD OCCURRED / NORMAL</b>
                 <span style="color: var(--text-secondary);">Features</span><span>:</span><b style="color: var(--blue-secondary);">13 Environmental Factors</b>
-                <span style="color: var(--text-secondary);">Inference Prob.</span><span>:</span><b style="color: #C2410C;">87.40%</b>
+                <span style="color: var(--text-secondary);">Accuracy</span><span>:</span><b style="color: #C2410C;">50.85%</b>
               </div>
               <a href="prediction.html" class="btn-primary" style="width: 100%; font-size: 13px;">
                 Run Flood Prediction →
@@ -346,22 +341,22 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><b>Heavy Rainfall Model</b><br><span style="font-size: 11px; color: var(--text-secondary);">Logistic Regression</span></td>
+                  <td><b>Heavy Rainfall Model</b><br><span style="font-size: 11px; color: var(--text-secondary);">Random Forest Classifier</span></td>
                   <td>Daily Rainfall Data - India (27,268 Test Records)</td>
-                  <td><b style="color: var(--blue-secondary);">96.33%</b></td>
-                  <td>10.19%</td>
-                  <td><b style="color: var(--risk-low-text);">95.76%</b></td>
-                  <td>18.42%</td>
-                  <td><b style="color: var(--blue-secondary);">0.9928</b></td>
+                  <td><b style="color: var(--blue-secondary);">97.11%</b></td>
+                  <td>11.12%</td>
+                  <td><b style="color: var(--risk-low-text);">81.36%</b></td>
+                  <td>19.57%</td>
+                  <td><b style="color: var(--blue-secondary);">0.9840</b></td>
                 </tr>
                 <tr>
-                  <td><b>Flood Inundation Model</b><br><span style="font-size: 11px; color: var(--text-secondary);">Random Forest Classifier</span></td>
+                  <td><b>Flood Inundation Model</b><br><span style="font-size: 11px; color: var(--text-secondary);">Decision Tree Classifier</span></td>
                   <td>flood_risk.csv (2,000 Test Records)</td>
-                  <td><b>50.60%</b></td>
-                  <td>51.11%</td>
-                  <td>52.23%</td>
-                  <td>51.66%</td>
-                  <td><b>0.5097</b></td>
+                  <td><b>50.85%</b></td>
+                  <td>51.86%</td>
+                  <td>38.67%</td>
+                  <td>44.31%</td>
+                  <td><b>0.5143</b></td>
                 </tr>
               </tbody>
             </table>
@@ -386,10 +381,13 @@
               <div style="color: var(--blue-secondary); font-weight: 800;">↓</div>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                 <div style="background: var(--light-blue-bg); border: 1px solid var(--border-blue); padding: 10px; border-radius: 8px; font-weight: 700; color: var(--blue-secondary); font-size: 12px;">
-                  RAINFALL MODEL<br>(Logistic Regression)
+                  RAINFALL MODEL<br>(Random Forest)
                 </div>
                 <div style="background: var(--light-blue-bg); border: 1px solid var(--border-blue); padding: 10px; border-radius: 8px; font-weight: 700; color: #C2410C; font-size: 12px;">
-                  FLOOD MODEL<br>(Random Forest)
+                  FLOOD MODEL<br>(Decision Tree)
+                </div>
+              </div>
+              <div style="color: var(--blue-secondary); font-weight: 800;">↓</div>br>(Random Forest)
                 </div>
               </div>
               <div style="color: var(--blue-secondary); font-weight: 800;">↓</div>
@@ -484,7 +482,7 @@
               <span>🧠 AI/ML CONCEPTS USED</span>
             </div>
             <ul style="font-size: 13px; color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
-              <li><b>Supervised Binary Classification:</b> Logistic Regression &amp; Random Forest Classifiers.</li>
+              <li><b>Supervised Binary Classification:</b> Random Forest &amp; Decision Tree Classifiers.</li>
               <li><b>Temporal Validation Split:</b> Chronological train/test split preserving sequence integrity.</li>
               <li><b>Zero Data Leakage Audit:</b> Strict feature exclusion to avoid target contamination.</li>
               <li><b>Imbalanced Class Evaluation:</b> ROC-AUC, Recall, and Precision benchmarking.</li>
@@ -501,11 +499,10 @@
       <footer class="app-footer">
         <div class="footer-container">
           <div class="footer-left">
-            <span class="footer-title">AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</span>
-            <span class="footer-subtitle">AI/ML-based rainfall prediction, flood-risk assessment, and early-warning decision support.</span>
+            <span>⚡</span> AI-Powered Heavy Rainfall &amp; Flood Early-Warning System
           </div>
           <div class="footer-right">
-            <span class="footer-copy">&copy; 2026 AI Early-Warning System. All rights reserved.</span>
+            Machine Learning • Risk Assessment • Early Warning
           </div>
         </div>
       </footer>

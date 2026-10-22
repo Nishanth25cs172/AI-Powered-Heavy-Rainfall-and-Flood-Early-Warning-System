@@ -1,0 +1,554 @@
+[
+  {
+    "type": "dir",
+    "path": "backend",
+    "children": [
+      {
+        "type": "file",
+        "path": "backend\\app.py",
+        "size": 58675,
+        "lines": 1157
+      },
+      {
+        "type": "dir",
+        "path": "backend\\services",
+        "children": [
+          {
+            "type": "file",
+            "path": "backend\\services\\risk_engine.py",
+            "size": 6987,
+            "lines": 151
+          },
+          {
+            "type": "file",
+            "path": "backend\\services\\__init__.py",
+            "size": 37,
+            "lines": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "dir",
+    "path": "data",
+    "children": [
+      {
+        "type": "file",
+        "path": "data\\Daily Rainfall Data - India (2009-2024).csv",
+        "size": 12551774,
+        "lines": 0
+      },
+      {
+        "type": "file",
+        "path": "data\\flood_risk.csv",
+        "size": 1854311,
+        "lines": 0
+      },
+      {
+        "type": "file",
+        "path": "data\\Indian Rainfall and Weather Prediction Dataset.xlsx",
+        "size": 64579550,
+        "lines": 0
+      }
+    ]
+  },
+  {
+    "type": "dir",
+    "path": "frontend",
+    "children": [
+      {
+        "type": "file",
+        "path": "frontend\\about.html",
+        "size": 26812,
+        "lines": 436
+      },
+      {
+        "type": "file",
+        "path": "frontend\\alerts.html",
+        "size": 13064,
+        "lines": 282
+      },
+      {
+        "type": "file",
+        "path": "frontend\\analytics.html",
+        "size": 16046,
+        "lines": 362
+      },
+      {
+        "type": "dir",
+        "path": "frontend\\assets",
+        "children": [
+          {
+            "type": "file",
+            "path": "frontend\\assets\\storm_hero_bg.jpg",
+            "size": 774388,
+            "lines": 0
+          }
+        ]
+      },
+      {
+        "type": "dir",
+        "path": "frontend\\css",
+        "children": [
+          {
+            "type": "file",
+            "path": "frontend\\css\\leaflet.css",
+            "size": 14806,
+            "lines": 661
+          },
+          {
+            "type": "file",
+            "path": "frontend\\css\\style.css",
+            "size": 44725,
+            "lines": 2183
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "path": "frontend\\dashboard.html",
+        "size": 24946,
+        "lines": 535
+      },
+      {
+        "type": "file",
+        "path": "frontend\\index.html",
+        "size": 739,
+        "lines": 18
+      },
+      {
+        "type": "dir",
+        "path": "frontend\\js",
+        "children": [
+          {
+            "type": "file",
+            "path": "frontend\\js\\api.js",
+            "size": 18247,
+            "lines": 501
+          },
+          {
+            "type": "file",
+            "path": "frontend\\js\\app.js",
+            "size": 122708,
+            "lines": 2766
+          },
+          {
+            "type": "file",
+            "path": "frontend\\js\\chart.umd.min.js",
+            "size": 205399,
+            "lines": 20
+          },
+          {
+            "type": "file",
+            "path": "frontend\\js\\config.js",
+            "size": 7951,
+            "lines": 217
+          },
+          {
+            "type": "file",
+            "path": "frontend\\js\\leaflet.js",
+            "size": 147552,
+            "lines": 6
+          },
+          {
+            "type": "file",
+            "path": "frontend\\js\\login.js",
+            "size": 2821,
+            "lines": 91
+          },
+          {
+            "type": "file",
+            "path": "frontend\\js\\rain.js",
+            "size": 5867,
+            "lines": 209
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "path": "frontend\\login.html",
+        "size": 9935,
+        "lines": 219
+      },
+      {
+        "type": "file",
+        "path": "frontend\\overview.html",
+        "size": 28134,
+        "lines": 531
+      },
+      {
+        "type": "file",
+        "path": "frontend\\package-lock.json",
+        "size": 87,
+        "lines": 6
+      },
+      {
+        "type": "file",
+        "path": "frontend\\package.json",
+        "size": 324,
+        "lines": 13
+      },
+      {
+        "type": "file",
+        "path": "frontend\\prediction.html",
+        "size": 24392,
+        "lines": 479
+      },
+      {
+        "type": "file",
+        "path": "frontend\\rainfall-prediction.html",
+        "size": 25680,
+        "lines": 500
+      },
+      {
+        "type": "file",
+        "path": "frontend\\rainfall-results.html",
+        "size": 14622,
+        "lines": 321
+      },
+      {
+        "type": "file",
+        "path": "frontend\\results.html",
+        "size": 14293,
+        "lines": 316
+      },
+      {
+        "type": "file",
+        "path": "frontend\\risk-map.html",
+        "size": 13138,
+        "lines": 273
+      },
+      {
+        "type": "file",
+        "path": "frontend\\_nav.html",
+        "size": 1741,
+        "lines": 40
+      }
+    ]
+  },
+  {
+    "type": "file",
+    "path": "index.html",
+    "size": 761,
+    "lines": 18
+  },
+  {
+    "type": "dir",
+    "path": "ml",
+    "children": [
+      {
+        "type": "file",
+        "path": "ml\\audit_datasets.py",
+        "size": 1342,
+        "lines": 33
+      },
+      {
+        "type": "file",
+        "path": "ml\\inspect_datasets.py",
+        "size": 4702,
+        "lines": 104
+      },
+      {
+        "type": "file",
+        "path": "ml\\inspect_rainfall_csv.py",
+        "size": 702,
+        "lines": 14
+      },
+      {
+        "type": "dir",
+        "path": "ml\\models",
+        "children": [
+          {
+            "type": "file",
+            "path": "ml\\models\\flood_decision_tree_model.joblib",
+            "size": 9483,
+            "lines": 0
+          },
+          {
+            "type": "file",
+            "path": "ml\\models\\flood_risk_model.joblib",
+            "size": 9483,
+            "lines": 0
+          },
+          {
+            "type": "file",
+            "path": "ml\\models\\rainfall_prediction_model.joblib",
+            "size": 41826699,
+            "lines": 0
+          },
+          {
+            "type": "file",
+            "path": "ml\\models\\rainfall_random_forest_model.joblib",
+            "size": 41826699,
+            "lines": 0
+          }
+        ]
+      },
+      {
+        "type": "dir",
+        "path": "ml\\reports",
+        "children": [
+          {
+            "type": "file",
+            "path": "ml\\reports\\flood_model_metadata.json",
+            "size": 4096,
+            "lines": 196
+          },
+          {
+            "type": "file",
+            "path": "ml\\reports\\model_metadata.json",
+            "size": 4096,
+            "lines": 196
+          },
+          {
+            "type": "file",
+            "path": "ml\\reports\\rainfall_model_metadata.json",
+            "size": 2236,
+            "lines": 97
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_app_endpoints.py",
+        "size": 4870,
+        "lines": 118
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_endpoints.py",
+        "size": 3070,
+        "lines": 60
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_flood_classification.py",
+        "size": 3295,
+        "lines": 86
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_full_suite.py",
+        "size": 4118,
+        "lines": 85
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_rainfall_api_endpoints.py",
+        "size": 2468,
+        "lines": 45
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_rainfall_classification.py",
+        "size": 4465,
+        "lines": 96
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_rainfall_lag.py",
+        "size": 2719,
+        "lines": 66
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_rainfall_modeling.py",
+        "size": 3304,
+        "lines": 92
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_rainfall_predict_fn.py",
+        "size": 3288,
+        "lines": 87
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_rectified_apis.py",
+        "size": 3271,
+        "lines": 91
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_risk_map.py",
+        "size": 5494,
+        "lines": 126
+      },
+      {
+        "type": "file",
+        "path": "ml\\test_sidebar_navigation.py",
+        "size": 2992,
+        "lines": 50
+      },
+      {
+        "type": "file",
+        "path": "ml\\train_flood_model.py",
+        "size": 7051,
+        "lines": 170
+      },
+      {
+        "type": "file",
+        "path": "ml\\train_model.py",
+        "size": 7734,
+        "lines": 196
+      },
+      {
+        "type": "file",
+        "path": "ml\\train_rainfall_model.py",
+        "size": 6026,
+        "lines": 147
+      },
+      {
+        "type": "file",
+        "path": "ml\\validate_integration.py",
+        "size": 5717,
+        "lines": 114
+      },
+      {
+        "type": "file",
+        "path": "ml\\verify_live_http.py",
+        "size": 2654,
+        "lines": 78
+      }
+    ]
+  },
+  {
+    "type": "file",
+    "path": "package-lock.json",
+    "size": 135,
+    "lines": 6
+  },
+  {
+    "type": "file",
+    "path": "package.json",
+    "size": 355,
+    "lines": 13
+  },
+  {
+    "type": "file",
+    "path": "README.md",
+    "size": 15823,
+    "lines": 268
+  },
+  {
+    "type": "file",
+    "path": "requirements.txt",
+    "size": 69,
+    "lines": 4
+  },
+  {
+    "type": "file",
+    "path": "run.bat",
+    "size": 92,
+    "lines": 0
+  },
+  {
+    "type": "dir",
+    "path": "scratch",
+    "children": [
+      {
+        "type": "file",
+        "path": "scratch\\compare_headers.py",
+        "size": 1442,
+        "lines": 41
+      },
+      {
+        "type": "file",
+        "path": "scratch\\compute_flood_stats.py",
+        "size": 1596,
+        "lines": 43
+      },
+      {
+        "type": "file",
+        "path": "scratch\\flood_stats_summary.json",
+        "size": 3107,
+        "lines": 126
+      },
+      {
+        "type": "file",
+        "path": "scratch\\generate_tree.py",
+        "size": 1395,
+        "lines": 40
+      },
+      {
+        "type": "file",
+        "path": "scratch\\get_dataset_stats.py",
+        "size": 1608,
+        "lines": 49
+      },
+      {
+        "type": "file",
+        "path": "scratch\\inspect_headers.py",
+        "size": 1645,
+        "lines": 40
+      },
+      {
+        "type": "file",
+        "path": "scratch\\print_headers.py",
+        "size": 680,
+        "lines": 24
+      },
+      {
+        "type": "file",
+        "path": "scratch\\run_flood_validation_test_suite.py",
+        "size": 858,
+        "lines": 25
+      },
+      {
+        "type": "file",
+        "path": "scratch\\run_validation_test_suite.py",
+        "size": 514,
+        "lines": 19
+      },
+      {
+        "type": "file",
+        "path": "scratch\\test_flood_input_validation.py",
+        "size": 7677,
+        "lines": 166
+      },
+      {
+        "type": "file",
+        "path": "scratch\\test_http_405_fix.py",
+        "size": 3411,
+        "lines": 67
+      },
+      {
+        "type": "file",
+        "path": "scratch\\test_weather_input_validation.py",
+        "size": 5667,
+        "lines": 136
+      },
+      {
+        "type": "file",
+        "path": "scratch\\verify_all_page_headers.py",
+        "size": 2673,
+        "lines": 67
+      },
+      {
+        "type": "file",
+        "path": "scratch\\verify_dataset_model.py",
+        "size": 2111,
+        "lines": 56
+      },
+      {
+        "type": "file",
+        "path": "scratch\\verify_flood_dataset_model.py",
+        "size": 1690,
+        "lines": 49
+      },
+      {
+        "type": "file",
+        "path": "scratch\\verify_http_headers.py",
+        "size": 1482,
+        "lines": 39
+      },
+      {
+        "type": "file",
+        "path": "scratch\\verify_live_clock.py",
+        "size": 1117,
+        "lines": 27
+      }
+    ]
+  }
+]

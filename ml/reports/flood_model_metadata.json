@@ -1,289 +1,196 @@
 {
-  "model_name": "Flood Inundation Prediction Model",
-  "primary_algorithm": "Random Forest Classifier",
-  "comparison_algorithm": "Decision Tree Classifier",
-  "target": "Flood Occurred",
-  "target_distribution": {
-    "1": 5057,
-    "0": 4943
-  },
-  "dataset_name": "flood_risk.csv",
-  "dataset_total_samples": 10000,
-  "train_samples": 8000,
-  "test_samples": 2000,
-  "leakage_audit": {
-    "historical_floods_correlation": 0.012,
-    "conclusion": "Zero target leakage detected"
-  },
-  "columns": [
-    "Latitude",
-    "Longitude",
-    "Rainfall (mm)",
-    "Temperature (\u00b0C)",
-    "Humidity (%)",
-    "River Discharge (m\u00b3/s)",
-    "Water Level (m)",
-    "Elevation (m)",
-    "Land Cover",
-    "Soil Type",
-    "Population Density",
-    "Infrastructure",
-    "Historical Floods"
-  ],
-  "numeric_columns": [
-    "Latitude",
-    "Longitude",
-    "Rainfall (mm)",
-    "Temperature (\u00b0C)",
-    "Humidity (%)",
-    "River Discharge (m\u00b3/s)",
-    "Water Level (m)",
-    "Elevation (m)",
-    "Population Density",
-    "Infrastructure",
-    "Historical Floods"
-  ],
-  "categorical_columns": [
-    "Land Cover",
-    "Soil Type"
-  ],
-  "categorical_options": {
-    "Land Cover": [
-      "Agricultural",
-      "Desert",
-      "Forest",
-      "Urban",
-      "Water Body"
+    "model_name": "Flood Risk Decision Tree Early Warning Classifier",
+    "primary_algorithm": "Decision Tree Classifier",
+    "selection_criteria": "Best F1-Score & Recall on Stratified Holdout Test Set",
+    "target_definition": "Flood Occurred (1 = Flood, 0 = No Flood)",
+    "dataset_source": "flood_risk.csv",
+    "dataset_total_samples": 10000,
+    "train_samples": 8000,
+    "test_samples": 2000,
+    "columns": [
+        "Latitude",
+        "Longitude",
+        "Rainfall (mm)",
+        "River Discharge (m\u00b3/s)",
+        "Water Level (m)",
+        "Elevation (m)",
+        "Land Cover",
+        "Soil Type"
     ],
-    "Soil Type": [
-      "Clay",
-      "Loam",
-      "Peat",
-      "Sandy",
-      "Silt"
-    ]
-  },
-  "ranges": {
-    "Latitude": {
-      "min": 8.000337407905619,
-      "max": 36.99181252529779
-    },
-    "Longitude": {
-      "min": 68.00457459276365,
-      "max": 96.99781997816213
-    },
-    "Rainfall (mm)": {
-      "min": 0.014437168293524,
-      "max": 299.9702931027695
-    },
-    "Temperature (\u00b0C)": {
-      "min": 15.00016610027214,
-      "max": 44.99368115437786
-    },
-    "Humidity (%)": {
-      "min": 20.001338900634774,
-      "max": 99.9977717894386
-    },
-    "River Discharge (m\u00b3/s)": {
-      "min": 0.0421610565215502,
-      "max": 4999.698480228592
-    },
-    "Water Level (m)": {
-      "min": 0.0027012235672785,
-      "max": 9.996898773860396
-    },
-    "Elevation (m)": {
-      "min": 1.1503397240072708,
-      "max": 8846.894877202165
-    },
-    "Population Density": {
-      "min": 2.2890002655517883,
-      "max": 9999.169529703417
-    },
-    "Infrastructure": {
-      "min": 0.0,
-      "max": 1.0
-    },
-    "Historical Floods": {
-      "min": 0.0,
-      "max": 1.0
-    }
-  },
-  "hyperparameters": {
-    "n_estimators": 200,
-    "max_depth": 12,
-    "min_samples_split": 5,
-    "min_samples_leaf": 2,
-    "class_weight": "balanced",
-    "random_state": 42
-  },
-  "cv_metrics": {
-    "cv_folds": 5,
-    "cv_mean_f1": 0.5287,
-    "cv_mean_roc_auc": 0.5237,
-    "cv_mean_accuracy": 0.5219
-  },
-  "primary_evaluation_metrics": {
-    "accuracy": 0.506,
-    "precision": 0.5111,
-    "recall": 0.5223,
-    "f1_score": 0.5166,
-    "f1": 0.5166,
-    "roc_auc": 0.5097,
-    "confusion_matrix": [
-      [
-        484,
-        505
-      ],
-      [
-        483,
-        528
-      ]
+    "numeric_columns": [
+        "Latitude",
+        "Longitude",
+        "Rainfall (mm)",
+        "River Discharge (m\u00b3/s)",
+        "Water Level (m)",
+        "Elevation (m)"
     ],
-    "classification_report": {
-      "0": {
-        "precision": 0.500517063081696,
-        "recall": 0.48938321536905965,
-        "f1-score": 0.4948875255623722,
-        "support": 989.0
-      },
-      "1": {
-        "precision": 0.5111326234269119,
-        "recall": 0.5222551928783383,
-        "f1-score": 0.5166340508806262,
-        "support": 1011.0
-      },
-      "accuracy": 0.506,
-      "macro avg": {
-        "precision": 0.505824843254304,
-        "recall": 0.505819204123699,
-        "f1-score": 0.5057607882214992,
-        "support": 2000.0
-      },
-      "weighted avg": {
-        "precision": 0.5058832288362026,
-        "recall": 0.506,
-        "f1-score": 0.5058803941107496,
-        "support": 2000.0
-      }
-    }
-  },
-  "metrics": {
-    "accuracy": 0.506,
-    "precision": 0.5111,
-    "recall": 0.5223,
-    "f1_score": 0.5166,
-    "f1": 0.5166,
-    "roc_auc": 0.5097,
-    "confusion_matrix": [
-      [
-        484,
-        505
-      ],
-      [
-        483,
-        528
-      ]
+    "categorical_columns": [
+        "Land Cover",
+        "Soil Type"
     ],
+    "numeric_features": [
+        "Latitude",
+        "Longitude",
+        "Rainfall (mm)",
+        "River Discharge (m\u00b3/s)",
+        "Water Level (m)",
+        "Elevation (m)"
+    ],
+    "categorical_features": [
+        "Land Cover",
+        "Soil Type"
+    ],
+    "primary_evaluation_metrics": {
+        "accuracy": 0.5205,
+        "precision": 0.5234,
+        "recall": 0.5757,
+        "f1_score": 0.5483,
+        "roc_auc": 0.5157,
+        "confusion_matrix": [
+            [
+                459,
+                530
+            ],
+            [
+                429,
+                582
+            ]
+        ],
+        "classification_report": {
+            "0": {
+                "precision": 0.5168918918918919,
+                "recall": 0.4641051567239636,
+                "f1-score": 0.48907831646244004,
+                "support": 989.0
+            },
+            "1": {
+                "precision": 0.5233812949640287,
+                "recall": 0.5756676557863502,
+                "f1-score": 0.5482807348092322,
+                "support": 1011.0
+            },
+            "accuracy": 0.5205,
+            "macro avg": {
+                "precision": 0.5201365934279603,
+                "recall": 0.5198864062551569,
+                "f1-score": 0.5186795256358361,
+                "support": 2000.0
+            },
+            "weighted avg": {
+                "precision": 0.520172285144857,
+                "recall": 0.5205,
+                "f1-score": 0.5190051389367435,
+                "support": 2000.0
+            }
+        }
+    },
     "feature_importances": [
-      {
-        "feature": "Humidity (%)",
-        "importance": 0.10503
-      },
-      {
-        "feature": "Water Level (m)",
-        "importance": 0.10414
-      },
-      {
-        "feature": "River Discharge (m\u00b3/s)",
-        "importance": 0.1028
-      },
-      {
-        "feature": "Longitude",
-        "importance": 0.1006
-      },
-      {
-        "feature": "Temperature (\u00b0C)",
-        "importance": 0.09988
-      },
-      {
-        "feature": "Rainfall (mm)",
-        "importance": 0.09611
-      },
-      {
-        "feature": "Elevation (m)",
-        "importance": 0.09468
-      },
-      {
-        "feature": "Population Density",
-        "importance": 0.0936
-      },
-      {
-        "feature": "Latitude",
-        "importance": 0.09328
-      },
-      {
-        "feature": "Infrastructure",
-        "importance": 0.0133
-      }
+        {
+            "feature": "Water Level (m)",
+            "importance": 0.3466
+        },
+        {
+            "feature": "Longitude",
+            "importance": 0.20103
+        },
+        {
+            "feature": "River Discharge (m\u00b3/s)",
+            "importance": 0.17504
+        },
+        {
+            "feature": "Rainfall (mm)",
+            "importance": 0.12421
+        },
+        {
+            "feature": "Latitude",
+            "importance": 0.11644
+        },
+        {
+            "feature": "Elevation (m)",
+            "importance": 0.03668
+        },
+        {
+            "feature": "Land Cover_Agricultural",
+            "importance": 0.0
+        },
+        {
+            "feature": "Land Cover_Desert",
+            "importance": 0.0
+        },
+        {
+            "feature": "Land Cover_Forest",
+            "importance": 0.0
+        },
+        {
+            "feature": "Land Cover_Urban",
+            "importance": 0.0
+        },
+        {
+            "feature": "Land Cover_Water Body",
+            "importance": 0.0
+        },
+        {
+            "feature": "Soil Type_Clay",
+            "importance": 0.0
+        },
+        {
+            "feature": "Soil Type_Loam",
+            "importance": 0.0
+        },
+        {
+            "feature": "Soil Type_Peat",
+            "importance": 0.0
+        },
+        {
+            "feature": "Soil Type_Sandy",
+            "importance": 0.0
+        },
+        {
+            "feature": "Soil Type_Silt",
+            "importance": 0.0
+        }
+    ],
+    "benchmark_summary": [
+        {
+            "algorithm": "Decision Tree Classifier",
+            "accuracy": 0.5205,
+            "precision": 0.5234,
+            "recall": 0.5757,
+            "f1_score": 0.5483,
+            "roc_auc": 0.5157
+        },
+        {
+            "algorithm": "Random Forest Classifier",
+            "accuracy": 0.49,
+            "precision": 0.4952,
+            "recall": 0.4629,
+            "f1_score": 0.4785,
+            "roc_auc": 0.4935
+        },
+        {
+            "algorithm": "Gradient Boosting Classifier",
+            "accuracy": 0.5035,
+            "precision": 0.5086,
+            "recall": 0.5252,
+            "f1_score": 0.5168,
+            "roc_auc": 0.51
+        },
+        {
+            "algorithm": "Extra Trees Classifier",
+            "accuracy": 0.5085,
+            "precision": 0.514,
+            "recall": 0.5074,
+            "f1_score": 0.5107,
+            "roc_auc": 0.5108
+        },
+        {
+            "algorithm": "Logistic Regression",
+            "accuracy": 0.489,
+            "precision": 0.4947,
+            "recall": 0.5124,
+            "f1_score": 0.5034,
+            "roc_auc": 0.4926
+        }
     ]
-  },
-  "algorithm_comparison": {
-    "Random Forest (Primary)": {
-      "accuracy": 0.506,
-      "precision": 0.5111,
-      "recall": 0.5223,
-      "f1_score": 0.5166,
-      "roc_auc": 0.5097
-    },
-    "Decision Tree (Comparison)": {
-      "accuracy": 0.5085,
-      "precision": 0.5186,
-      "recall": 0.3867,
-      "f1_score": 0.4431,
-      "roc_auc": 0.5143
-    }
-  },
-  "feature_importances": [
-    {
-      "feature": "Humidity (%)",
-      "importance": 0.10503
-    },
-    {
-      "feature": "Water Level (m)",
-      "importance": 0.10414
-    },
-    {
-      "feature": "River Discharge (m\u00b3/s)",
-      "importance": 0.1028
-    },
-    {
-      "feature": "Longitude",
-      "importance": 0.1006
-    },
-    {
-      "feature": "Temperature (\u00b0C)",
-      "importance": 0.09988
-    },
-    {
-      "feature": "Rainfall (mm)",
-      "importance": 0.09611
-    },
-    {
-      "feature": "Elevation (m)",
-      "importance": 0.09468
-    },
-    {
-      "feature": "Population Density",
-      "importance": 0.0936
-    },
-    {
-      "feature": "Latitude",
-      "importance": 0.09328
-    },
-    {
-      "feature": "Infrastructure",
-      "importance": 0.0133
-    }
-  ]
 }

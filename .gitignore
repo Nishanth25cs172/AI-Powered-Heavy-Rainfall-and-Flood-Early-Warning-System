@@ -1,2 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Caches & Environments
+.pytest_cache/
+.venv/
+venv/
+ENV/
+env/
+.vscode/
+.idea/
+
+# Node dependencies
+node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
 powershell.bat
 powershell.cmd
+
+# Large Model Files & Datasets (Keep structure, ignore large binaries if needed)
+# ml/models/*.joblib
+# data/raw/*.csv
+# data/raw/*.xlsx

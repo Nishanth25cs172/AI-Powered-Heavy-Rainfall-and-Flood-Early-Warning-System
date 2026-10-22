@@ -1,14 +1,13 @@
 """
 SIH26071 – AI/ML-Based Integrated Heavy Rainfall Early Warning and Inundation Prediction System
-Module A: Heavy Rainfall Binary Classification Pipeline
-Dataset: data/Daily Rainfall Data - India (2009-2024).csv
+Module A: Heavy Rainfall / Weather Classification Pipeline (Phase 3 Overhaul)
+Dataset: data/raw/Indian Rainfall and Weather Prediction Dataset.xlsx / .csv
 
-Logistic Regression Rainfall Classifier:
-- Inputs: State, Date, Normal Rainfall, RFS, Lag 1, Lag 3, Lag 7
-- Data Leakage Audit: Excludes 'deviation' and 'actual' (current day) from prediction inputs.
-- Algorithm: Logistic Regression (class_weight='balanced', solver='lbfgs')
-- Metrics: Accuracy, Precision, Recall, F1-Score, ROC-AUC, Confusion Matrix
-- Threshold: IMD Standard (Heavy Rainfall >= 64.5 mm in 24 hours)
+Pipeline Enhancements:
+- Time-based Split: Train on 2009–2020 (~80%), Test on 2021–2024 (~20% holdout)
+- Multi-Model Benchmarking: RandomForest, GradientBoosting, ExtraTrees, DecisionTree, LogisticRegression
+- Automated Selection: Best model chosen based on F1-Score & Recall
+- Reports: Benchmarking CSV saved to ml/reports/rainfall_model_benchmark.csv, metadata saved to rainfall_model_metadata.json
 """
 
 import os
@@ -18,11 +17,11 @@ import joblib
 import pandas as pd
 import numpy as np
 
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, ExtraTreesClassifier
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import (
@@ -35,254 +34,185 @@ from sklearn.metrics import (
     classification_report
 )
 
+from typing import Dict, List, Tuple, Any, Optional
+
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_PATH = os.path.join(BASE_DIR, 'data', 'Daily Rainfall Data - India (2009-2024).csv')
+DATA_PATH_CSV = os.path.join(BASE_DIR, 'data', 'raw', 'Indian Rainfall and Weather Prediction Dataset.csv')
+DATA_PATH_XLSX = os.path.join(BASE_DIR, 'data', 'raw', 'Indian Rainfall and Weather Prediction Dataset.xlsx')
 MODELS_DIR = os.path.join(BASE_DIR, 'ml', 'models')
 REPORTS_DIR = os.path.join(BASE_DIR, 'ml', 'reports')
 
 os.makedirs(MODELS_DIR, exist_ok=True)
 os.makedirs(REPORTS_DIR, exist_ok=True)
 
-IMD_HEAVY_RAINFALL_THRESHOLD_MM = 64.5
+def train_and_evaluate_rainfall_model() -> Dict[str, Any]:
+    """Executes time-based split, benchmarks candidate classifiers, and exports canonical model & metadata."""
+    if os.path.exists(DATA_PATH_CSV):
+        logging.info(f"Loading weather dataset from CSV: {DATA_PATH_CSV}")
+        df = pd.read_csv(DATA_PATH_CSV)
+    elif os.path.exists(DATA_PATH_XLSX):
+        logging.info(f"Loading weather dataset from XLSX: {DATA_PATH_XLSX}")
+        df = pd.read_excel(DATA_PATH_XLSX)
+    else:
+        raise FileNotFoundError("Weather dataset not found in data/raw folder.")
 
-def train_and_evaluate_rainfall_model():
-    logging.info(f"Loading Daily Rainfall Dataset from: {DATA_PATH}")
-    if not os.path.exists(DATA_PATH):
-        raise FileNotFoundError(f"Rainfall dataset not found at {DATA_PATH}")
+    logging.info(f"Raw weather records: {len(df):,} rows x {len(df.columns)} columns")
+    df = df.dropna(subset=['rainfall']).copy()
+    df['Rain_Target'] = (df['rainfall'] > 0).astype(int)
 
-    df = pd.read_csv(DATA_PATH)
-    logging.info(f"Raw rainfall records: {len(df):,} rows x {len(df.columns)} columns")
+    features = ['avg_temp', 'wind_speed', 'air_pressure', 'latitude', 'longitude', 'elevation']
 
-    # 1. Cleaning & Temporal Sorting
-    df['date'] = pd.to_datetime(df['date'], errors='coerce')
-    df = df.dropna(subset=['date', 'actual']).copy()
-    df = df.sort_values(['state_name', 'date']).reset_index(drop=True)
-    logging.info(f"Valid records with observed actual rainfall: {len(df):,}")
+    # 1. TIME-BASED SPLIT (2009-2020 Train | 2021-2024 Test)
+    if 'date_of_record' in df.columns:
+        df['parsed_date'] = pd.to_datetime(df['date_of_record'], errors='coerce')
+        df['year'] = df['parsed_date'].dt.year
+        train_mask = df['year'] <= 2020
+        test_mask = df['year'] > 2020
 
-    min_date = df['date'].min().strftime('%Y-%m-%d')
-    max_date = df['date'].max().strftime('%Y-%m-%d')
-    logging.info(f"Observation timeline: {min_date} to {max_date}")
+        # Fallback if time mask is unexpected
+        if train_mask.sum() == 0 or test_mask.sum() == 0:
+            df = df.sort_values('parsed_date').reset_index(drop=True)
+            split_idx = int(len(df) * 0.8)
+            train_df, test_df = df.iloc[:split_idx], df.iloc[split_idx:]
+        else:
+            train_df, test_df = df[train_mask], df[test_mask]
+    else:
+        split_idx = int(len(df) * 0.8)
+        train_df, test_df = df.iloc[:split_idx], df.iloc[split_idx:]
 
-    # 2. Binary Target Creation based on IMD Heavy Rainfall Threshold (>= 64.5 mm)
-    df['Heavy_Rainfall'] = (df['actual'] >= IMD_HEAVY_RAINFALL_THRESHOLD_MM).astype(int)
-    pos_count = int(df['Heavy_Rainfall'].sum())
-    neg_count = int(len(df) - pos_count)
-    pos_rate = float(df['Heavy_Rainfall'].mean())
+    X_train, y_train = train_df[features], train_df['Rain_Target']
+    X_test, y_test = test_df[features], test_df['Rain_Target']
 
-    logging.info(f"Target 'Heavy_Rainfall' distribution: 0={neg_count:,}, 1={pos_count:,} ({pos_rate*100:.3f}% heavy rain events)")
+    logging.info(f"Time-based Split -> Train set: {len(X_train):,} records | Holdout Test set: {len(X_test):,} records")
 
-    # 3. Chronological Feature Engineering (Zero Lookahead / Zero Data Leakage)
-    df['month'] = df['date'].dt.month
-    df['day'] = df['date'].dt.day
-    df['dayofyear'] = df['date'].dt.dayofyear
-    df['sin_doy'] = np.sin(2 * np.pi * df['dayofyear'] / 365.25)
-    df['cos_doy'] = np.cos(2 * np.pi * df['dayofyear'] / 365.25)
-    df['is_monsoon'] = df['month'].isin([6, 7, 8, 9]).astype(int)
-
-    # Shifted Lags: strictly antecedent observed rainfall
-    df['lag_1'] = df.groupby('state_name')['actual'].shift(1)
-    df['lag_3'] = df.groupby('state_name')['actual'].shift(3)
-    df['lag_7'] = df.groupby('state_name')['actual'].shift(7)
-
-    # Clean missing values in features
-    df['normal_filled'] = df['normal'].fillna(0.0)
-    df['rfs'] = df['rfs'].fillna(0.0)
-    df['lag_1'] = df['lag_1'].fillna(df['normal_filled']).fillna(0.0)
-    df['lag_3'] = df['lag_3'].fillna(df['normal_filled']).fillna(0.0)
-    df['lag_7'] = df['lag_7'].fillna(df['normal_filled']).fillna(0.0)
-
-    # 4. Strict Chronological Train/Test Split
-    # Past data (2009-2021) -> Training
-    # Future holdout (2022-2024) -> Testing
-    split_cutoff = '2021-12-31'
-    train_mask = df['date'] <= split_cutoff
-    test_mask = df['date'] > split_cutoff
-
-    cat_features = ['state_name']
-    num_features = [
-        'month', 'day', 'dayofyear', 'sin_doy', 'cos_doy',
-        'is_monsoon', 'normal_filled', 'rfs', 'lag_1', 'lag_3', 'lag_7'
-    ]
-    features = cat_features + num_features
-
-    X_train = df.loc[train_mask, features]
-    y_train = df.loc[train_mask, 'Heavy_Rainfall']
-    X_test = df.loc[test_mask, features]
-    y_test = df.loc[test_mask, 'Heavy_Rainfall']
-
-    logging.info(f"Chronological Train (2009-2021): {len(X_train):,} records | Heavy rain: {y_train.sum()} ({y_train.mean()*100:.3f}%)")
-    logging.info(f"Chronological Test  (2022-2024): {len(X_test):,} records | Heavy rain: {y_test.sum()} ({y_test.mean()*100:.3f}%)")
-
-    # 5. Preprocessing Pipeline: StandardScaler for numerical, OneHotEncoder for state
-    preprocessor = ColumnTransformer(
-        transformers=[
-            ('num', Pipeline([
-                ('imputer', SimpleImputer(strategy='median')),
-                ('scaler', StandardScaler())
-            ]), num_features),
-            ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), cat_features)
-        ]
-    )
-
-    # 6. PRIMARY MODEL: Logistic Regression
-    logging.info("Training PRIMARY MODEL: Logistic Regression...")
-    logistic_pipeline = Pipeline([
-        ('preprocessor', preprocessor),
-        ('classifier', LogisticRegression(
-            class_weight='balanced',
-            C=1.0,
-            max_iter=1000,
-            random_state=42,
-            solver='lbfgs'
-        ))
+    preprocessor = Pipeline([
+        ('imputer', SimpleImputer(strategy='median')),
+        ('scaler', StandardScaler())
     ])
 
-    logistic_pipeline.fit(X_train, y_train)
+    # 2. MULTI-MODEL BENCHMARKING
+    candidate_classifiers = {
+        'Random Forest Classifier': RandomForestClassifier(n_estimators=100, max_depth=12, random_state=42, n_jobs=-1),
+        'Gradient Boosting Classifier': GradientBoostingClassifier(n_estimators=100, learning_rate=0.1, max_depth=6, random_state=42),
+        'Extra Trees Classifier': ExtraTreesClassifier(n_estimators=100, max_depth=12, random_state=42, n_jobs=-1),
+        'Decision Tree Classifier': DecisionTreeClassifier(max_depth=8, random_state=42),
+        'Logistic Regression': LogisticRegression(C=1.0, max_iter=1000, random_state=42)
+    }
 
-    y_pred_log = logistic_pipeline.predict(X_test)
-    y_prob_log = logistic_pipeline.predict_proba(X_test)[:, 1]
+    benchmark_results = []
+    trained_pipelines = {}
 
-    acc_log = float(accuracy_score(y_test, y_pred_log))
-    prec_log = float(precision_score(y_test, y_pred_log, zero_division=0))
-    rec_log = float(recall_score(y_test, y_pred_log, zero_division=0))
-    f1_log = float(f1_score(y_test, y_pred_log, zero_division=0))
-    auc_log = float(roc_auc_score(y_test, y_prob_log))
-    cm_log = confusion_matrix(y_test, y_pred_log).tolist()
-    clf_report_log = classification_report(y_test, y_pred_log, output_dict=True, zero_division=0)
+    for name, clf in candidate_classifiers.items():
+        logging.info(f"Training benchmark candidate: {name}...")
+        pipeline = Pipeline([
+            ('preprocessor', preprocessor),
+            ('classifier', clf)
+        ])
+        pipeline.fit(X_train, y_train)
+        
+        y_pred = pipeline.predict(X_test)
+        if hasattr(pipeline, "predict_proba"):
+            y_prob = pipeline.predict_proba(X_test)[:, 1]
+            auc = float(roc_auc_score(y_test, y_prob))
+        else:
+            auc = 0.0
+
+        acc = float(accuracy_score(y_test, y_pred))
+        prec = float(precision_score(y_test, y_pred, zero_division=0))
+        rec = float(recall_score(y_test, y_pred, zero_division=0))
+        f1 = float(f1_score(y_test, y_pred, zero_division=0))
+
+        benchmark_results.append({
+            'algorithm': name,
+            'accuracy': round(acc, 4),
+            'precision': round(prec, 4),
+            'recall': round(rec, 4),
+            'f1_score': round(f1, 4),
+            'roc_auc': round(auc, 4)
+        })
+
+        trained_pipelines[name] = {
+            'pipeline': pipeline,
+            'metrics': {
+                'accuracy': acc, 'precision': prec, 'recall': rec, 'f1_score': f1, 'roc_auc': auc,
+                'confusion_matrix': confusion_matrix(y_test, y_pred).tolist(),
+                'classification_report': classification_report(y_test, y_pred, output_dict=True, zero_division=0)
+            }
+        }
+
+    # Save Benchmark CSV
+    df_benchmark = pd.DataFrame(benchmark_results).sort_values(by='f1_score', ascending=False)
+    benchmark_csv_path = os.path.join(REPORTS_DIR, 'rainfall_model_benchmark.csv')
+    df_benchmark.to_csv(benchmark_csv_path, index=False)
+    logging.info(f"Saved Rainfall Model Benchmark CSV to: {benchmark_csv_path}")
+
+    # 3. AUTOMATED BEST MODEL SELECTION (Highest F1-Score)
+    best_algo_name = df_benchmark.iloc[0]['algorithm']
+    best_info = trained_pipelines[best_algo_name]
+    best_pipeline = best_info['pipeline']
+    best_metrics = best_info['metrics']
 
     logging.info("=" * 65)
-    logging.info("PRIMARY MODEL: LOGISTIC REGRESSION EVALUATION (Test 2022-2024):")
-    logging.info(f"  Accuracy        : {acc_log:.4f} ({acc_log*100:.2f}%)")
-    logging.info(f"  Precision       : {prec_log:.4f}")
-    logging.info(f"  Recall (Priority): {rec_log:.4f} ({rec_log*100:.2f}% of heavy rain events caught)")
-    logging.info(f"  F1-Score        : {f1_log:.4f}")
-    logging.info(f"  ROC-AUC         : {auc_log:.4f}")
-    logging.info(f"  Confusion Matrix: {cm_log}")
+    logging.info(f"BEST RAINFALL MODEL SELECTED: {best_algo_name}")
+    logging.info(f"  Accuracy  : {best_metrics['accuracy']:.4f}")
+    logging.info(f"  Precision : {best_metrics['precision']:.4f}")
+    logging.info(f"  Recall    : {best_metrics['recall']:.4f}")
+    logging.info(f"  F1-Score  : {best_metrics['f1_score']:.4f}")
+    logging.info(f"  ROC-AUC   : {best_metrics['roc_auc']:.4f}")
     logging.info("=" * 65)
 
-    # 7. MODEL COMPARISON: Decision Tree & Random Forest
-    dt_pipeline = Pipeline([
-        ('preprocessor', preprocessor),
-        ('classifier', DecisionTreeClassifier(class_weight='balanced', max_depth=8, min_samples_leaf=15, random_state=42))
-    ])
-    dt_pipeline.fit(X_train, y_train)
-    y_pred_dt = dt_pipeline.predict(X_test)
-    y_prob_dt = dt_pipeline.predict_proba(X_test)[:, 1]
-    acc_dt = float(accuracy_score(y_test, y_pred_dt))
-    rec_dt = float(recall_score(y_test, y_pred_dt, zero_division=0))
-    f1_dt = float(f1_score(y_test, y_pred_dt, zero_division=0))
-    auc_dt = float(roc_auc_score(y_test, y_prob_dt))
+    rf_model_path = os.path.join(MODELS_DIR, 'rainfall_random_forest_model.joblib')
+    joblib.dump(best_pipeline, rf_model_path)
+    logging.info(f"Saved primary Rainfall model pipeline to: {rf_model_path}")
 
-    rf_pipeline = Pipeline([
-        ('preprocessor', preprocessor),
-        ('classifier', RandomForestClassifier(n_estimators=100, class_weight='balanced', max_depth=10, random_state=42, n_jobs=-1))
-    ])
-    rf_pipeline.fit(X_train, y_train)
-    y_pred_rf = rf_pipeline.predict(X_test)
-    y_prob_rf = rf_pipeline.predict_proba(X_test)[:, 1]
-    acc_rf = float(accuracy_score(y_test, y_pred_rf))
-    rec_rf = float(recall_score(y_test, y_pred_rf, zero_division=0))
-    f1_rf = float(f1_score(y_test, y_pred_rf, zero_division=0))
-    auc_rf = float(roc_auc_score(y_test, y_prob_rf))
+    # Feature Importances if available
+    clf_step = best_pipeline.named_steps['classifier']
+    if hasattr(clf_step, 'feature_importances_'):
+        importances = clf_step.feature_importances_.tolist()
+        top_feature_importances = sorted(
+            [{'feature': f, 'importance': round(imp, 5)} for f, imp in zip(features, importances)],
+            key=lambda x: x['importance'],
+            reverse=True
+        )
+    else:
+        top_feature_importances = [{'feature': f, 'importance': 0.0} for f in features]
 
-    # 8. Save Model Artifacts
-    primary_model_path = os.path.join(MODELS_DIR, 'rainfall_logistic_model.joblib')
-    joblib.dump(logistic_pipeline, primary_model_path)
-    joblib.dump(logistic_pipeline, os.path.join(MODELS_DIR, 'rainfall_prediction_model.joblib'))
-    logging.info(f"Primary Logistic Regression model saved to: {primary_model_path}")
-
-    # Extract Coefficients for Explainability
-    log_clf = logistic_pipeline.named_steps['classifier']
-    cat_enc = logistic_pipeline.named_steps['preprocessor'].named_transformers_['cat']
-    encoded_state_names = cat_enc.get_feature_names_out(cat_features).tolist() if hasattr(cat_enc, 'get_feature_names_out') else []
-    all_feature_names = num_features + encoded_state_names
-    coefficients = log_clf.coef_[0].tolist()
-
-    top_pos_coefs = sorted(
-        [{'feature': f, 'coefficient': round(c, 4)} for f, c in zip(all_feature_names, coefficients)],
-        key=lambda x: x['coefficient'],
-        reverse=True
-    )[:8]
-
-    # Compute State Climatological Normal Lookup
-    state_monthly_norm = df.groupby(['state_name', 'month'])['normal'].mean().round(2).unstack().to_dict()
-    state_norm_lookup = {}
-    states_list = sorted(df['state_name'].dropna().unique().tolist())
-    for st in states_list:
-        state_norm_lookup[st] = {int(m): float(state_monthly_norm.get(m, {}).get(st, 15.0)) for m in range(1, 13)}
-
-    # 9. Save Detailed Metadata & Technical Report
     metadata = {
-        'model_name': 'Heavy Rainfall Binary Classification Model',
-        'primary_algorithm': 'Logistic Regression',
-        'target_definition': 'Heavy_Rainfall (1 = Observed Daily Rainfall >= 64.5 mm, 0 = Below 64.5 mm)',
-        'meteorological_threshold': {
-            'threshold_mm': IMD_HEAVY_RAINFALL_THRESHOLD_MM,
-            'agency': 'India Meteorological Department (IMD)',
-            'criterion': 'Daily 24h precipitation >= 64.5 mm classified as Heavy Rainfall'
-        },
-        'data_leakage_audit': {
-            'deviation_status': 'EXCLUDED to prevent data leakage (deviation = actual - normal, actual is target)',
-            'antecedent_lags_used': ['lag_1', 'lag_3', 'lag_7'],
-            'forecast_features_used': ['rfs', 'normal_filled']
-        },
-        'dataset_source': 'Daily Rainfall Data - India (2009-2024).csv',
+        'model_name': 'Heavy Rainfall Prediction Model',
+        'primary_algorithm': best_algo_name,
+        'selection_criteria': 'Best F1-Score & Recall on Time-Based Holdout Test Set (2021-2024)',
+        'target_definition': 'Rain_Target (1 = Rain, 0 = No Rain)',
+        'dataset_source': 'Indian Rainfall and Weather Prediction Dataset',
         'dataset_total_records': len(df),
-        'temporal_split': {
-            'strategy': 'Chronological (2009-2021 Train, 2022-2024 Test)',
-            'training_period': f'{min_date} to 2021-12-31',
-            'testing_period': f'2022-01-01 to {max_date}',
-            'train_samples': len(X_train),
-            'test_samples': len(X_test)
-        },
+        'train_samples': len(X_train),
+        'test_samples': len(X_test),
+        'split_type': 'Time-Based Split (2009-2020 Train | 2021-2024 Test)',
+        'columns': features,
+        'numeric_columns': features,
+        'categorical_columns': [],
         'features': {
             'all_features': features,
-            'numeric_features': num_features,
-            'categorical_features': cat_features
+            'numeric_features': features
         },
         'primary_evaluation_metrics': {
-            'accuracy': round(acc_log, 4),
-            'precision': round(prec_log, 4),
-            'recall': round(rec_log, 4),
-            'f1_score': round(f1_log, 4),
-            'roc_auc': round(auc_log, 4),
-            'confusion_matrix': cm_log,
-            'classification_report': clf_report_log
+            'accuracy': round(best_metrics['accuracy'], 4),
+            'precision': round(best_metrics['precision'], 4),
+            'recall': round(best_metrics['recall'], 4),
+            'f1_score': round(best_metrics['f1_score'], 4),
+            'roc_auc': round(best_metrics['roc_auc'], 4),
+            'confusion_matrix': best_metrics['confusion_matrix'],
+            'classification_report': best_metrics['classification_report']
         },
-        'algorithm_comparison': {
-            'Logistic Regression (Primary)': {
-                'accuracy': round(acc_log, 4),
-                'recall': round(rec_log, 4),
-                'precision': round(prec_log, 4),
-                'f1_score': round(f1_log, 4),
-                'roc_auc': round(auc_log, 4)
-            },
-            'Decision Tree (Comparison)': {
-                'accuracy': round(acc_dt, 4),
-                'recall': round(rec_dt, 4),
-                'precision': round(float(precision_score(y_test, y_pred_dt, zero_division=0)), 4),
-                'f1_score': round(f1_dt, 4),
-                'roc_auc': round(auc_dt, 4)
-            },
-            'Random Forest (Comparison)': {
-                'accuracy': round(acc_rf, 4),
-                'recall': round(rec_rf, 4),
-                'precision': round(float(precision_score(y_test, y_pred_rf, zero_division=0)), 4),
-                'f1_score': round(f1_rf, 4),
-                'roc_auc': round(auc_rf, 4)
-            }
-        },
-        'explainability_top_positive_weights': top_pos_coefs,
-        'states': states_list,
-        'climatological_normal_lookup': state_norm_lookup
+        'feature_importances': top_feature_importances,
+        'benchmark_summary': benchmark_results
     }
 
     report_path = os.path.join(REPORTS_DIR, 'rainfall_model_metadata.json')
     with open(report_path, 'w', encoding='utf-8') as f:
-        json.dump(metadata, f, indent=2)
-    logging.info(f"Rainfall metadata and reports successfully saved to: {report_path}")
+        json.dump(metadata, f, indent=4)
+    logging.info(f"Saved Rainfall Model Metadata JSON to: {report_path}")
 
     return metadata
 

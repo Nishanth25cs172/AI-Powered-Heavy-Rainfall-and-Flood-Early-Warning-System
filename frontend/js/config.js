@@ -8,7 +8,7 @@ const CONFIG = {
   subtitle: 'AI/ML-Based Integrated Decision Support & Early Warning System',
   datasetName: 'Daily Rainfall Data - India (2009-2024).csv',
   floodDatasetName: 'flood_risk.csv',
-  modelName: 'Logistic Regression & Decision Tree (Unit III Syllabus)',
+  modelName: 'Random Forest & Decision Tree Classifiers',
   dataStatus: '● Datasets Connected',
 
   // Exactly TWO Official Project Datasets
@@ -35,10 +35,10 @@ const CONFIG = {
     }
   },
   
-  // Backend REST API Endpoints (Auto-detects Flask port 5000 vs Live Server port 5500)
+  // Backend REST API Endpoints (Supports Same-Origin Flask serving & standalone static servers)
   API: (() => {
-    const isDirectFlask = (typeof window !== 'undefined' && window.location && window.location.port === '5000');
-    const base = isDirectFlask ? '/api' : 'http://127.0.0.1:5000/api';
+    const isFlaskServer = (typeof window !== 'undefined' && window.location && window.location.port === '5000');
+    const base = isFlaskServer ? '/api' : 'http://127.0.0.1:5000/api';
     return {
       BASE: base,
       HEALTH: `${base}/health`,

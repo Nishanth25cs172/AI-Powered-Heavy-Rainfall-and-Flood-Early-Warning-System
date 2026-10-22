@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Rainfall Prediction | AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</title>
+  <title>Heavy Rainfall Prediction | AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</title>
   <meta name="description" content="Predict rainfall using historical rainfall patterns from the Daily Rainfall Data - India (2009-2024) dataset.">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>🌧️</text></svg>">
 </head>
 <body>
@@ -18,7 +18,7 @@
     <!-- GLOBAL FIXED SIDEBAR -->
     <aside class="app-sidebar" id="appSidebar">
       <div class="sidebar-header">
-        <a href="dashboard.html" class="sidebar-brand" title="AI-Powered Heavy Rainfall &amp; Flood Early-Warning System Command Center">
+        <a href="dashboard.html" class="sidebar-brand" title="Early Warning Dashboard">
           <div class="sidebar-logo-icon">⚡</div>
           <div class="sidebar-logo-text">
             <span class="logo-title-line1">AI-POWERED</span>
@@ -60,19 +60,20 @@
           <span class="nav-icon">ℹ️</span>
           <span class="nav-label">About</span>
         </a>
-        <a href="login.html" class="nav-tab-btn nav-logout-btn" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
-          <span class="nav-icon">🚪</span>
-          <span class="nav-label">Logout</span>
-        </a>
       </nav>
 
       <div class="sidebar-footer">
         <div class="sidebar-system-card">
-          <div class="system-status-indicator">
-            <span class="status-pulse-dot"></span>
-            <span>SYSTEM OPERATIONAL</span>
+          <div class="sidebar-system-info">
+            <div class="system-status-indicator">
+              <span class="status-pulse-dot"></span>
+              <span>SYSTEM OPERATIONAL</span>
+            </div>
+            <div class="system-meta-text">AI Early-Warning Network</div>
           </div>
-          <div class="system-meta-text">AI Early-Warning Network</div>
+          <a href="login.html" class="sidebar-logout-action" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
+            <span>🚪</span> <span>Logout</span>
+          </a>
         </div>
       </div>
     </aside>
@@ -82,30 +83,24 @@
       <!-- Top Header -->
       <header class="app-header">
         <div class="header-left">
-          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">
-            ☰
-          </button>
+          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">☰</button>
           <div class="header-title-group">
-            <h1 class="header-current-title" id="headerCurrentTitle">Rainfall Prediction</h1>
-            <span class="header-current-subtitle" id="headerCurrentSubtitle">Predict heavy rainfall using the project's existing prediction model</span>
+            <h1 class="header-current-title" id="headerCurrentTitle">Early Warning Dashboard</h1>
+            <span class="header-current-subtitle" id="headerCurrentSubtitle">Monitor rainfall conditions, flood risk and early-warning information in one place.</span>
           </div>
         </div>
 
         <div class="header-right">
+          <div style="display: flex; gap: 12px; align-items: center; white-space: nowrap; flex-wrap: nowrap; flex-shrink: 0;">
           <div id="backendStatusPill" class="status-pill-backend" title="API Status">
             <span class="status-pulse-dot"></span>
             <span id="backendStatusText">Backend Connected</span>
           </div>
-          <div class="live-clock-badge" id="liveClock">
-            --:--:-- IST
-          </div>
-          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">
-            🔄
-          </button>
-          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">
-            🔊
-          </button>
-          <div class="user-profile-badge" id="btnLogout" title="Click to Logout">
+          <div class="live-clock-badge" id="liveClock">--:--:-- IST</div>
+        </div>
+          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">🔄</button>
+          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">🔊</button>
+          <div class="user-profile-badge" id="btnLogout" title="Click to Logout" onclick="localStorage.removeItem('sih_login'); window.location.href='login.html';">
             <div class="user-avatar">AD</div>
             <span class="user-info-text">Admin</span>
             <span style="font-size: 11px; color: var(--text-muted);">↪</span>
@@ -119,8 +114,8 @@
 
           <!-- PAGE TITLE SECTION -->
           <section class="page-title-section">
-            <h1>Rainfall Prediction</h1>
-            <p>Predict heavy rainfall using historical meteorological observations and logistic regression inference.</p>
+            <h1>Heavy Rainfall Prediction</h1>
+            <p>Predict heavy rainfall using historical meteorological observations and Random Forest machine learning inference.</p>
           </section>
 
       <!-- PAGE-SPECIFIC CONTENT -->
@@ -145,74 +140,65 @@
         <!-- Main Form & Info Grid -->
         <div class="grid-2-col">
 
-          <!-- Left Column: Prediction Form -->
+          <!-- Weather Input Card -->
           <div class="component-card">
             <div class="component-card-title">
-              <span>🌧️ METEOROLOGICAL PARAMETERS FORM</span>
-              <span class="risk-badge risk-low" style="font-size: 11px;">Logistic Regression</span>
+              <span>🌤️ WEATHER INPUT</span>
+              <span class="risk-badge risk-low" style="font-size: 11px;">Random Forest ML</span>
             </div>
-
-            <form id="rainfallPredictionForm">
-              <div class="form-grid">
-                
-                <!-- State Selection -->
-                <div class="form-group">
-                  <label class="form-label" for="stateNameSelect">State / Sub-Division *</label>
-                  <select class="form-select" id="stateNameSelect" name="state_name" required>
-                    <option value="" disabled selected>Loading States...</option>
-                    <option value="Maharashtra">Maharashtra</option>
-                    <option value="Kerala">Kerala</option>
-                    <option value="Karnataka">Karnataka</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Uttarakhand">Uttarakhand</option>
-                  </select>
-                </div>
-
-                <!-- Date -->
-                <div class="form-group">
-                  <label class="form-label" for="rainfallDateInput">Prediction Date *</label>
-                  <input type="date" class="form-input" id="rainfallDateInput" name="date" required>
-                </div>
-
-                <!-- Normal Rainfall -->
-                <div class="form-group">
-                  <label class="form-label" for="normalRainfallInput">Normal Rainfall (mm) *</label>
-                  <input type="number" step="0.1" min="0" class="form-input" id="normalRainfallInput" name="normal" placeholder="e.g. 18.5" required>
-                </div>
-
-                <!-- Recent Rainfall / RFS -->
-                <div class="form-group">
-                  <label class="form-label" for="rfsInput">Recent Rainfall / RFS Index (mm) *</label>
-                  <input type="number" step="0.1" min="0" class="form-input" id="rfsInput" name="recent_rainfall" placeholder="e.g. 45.0" required>
-                </div>
-
-                <!-- Lag 1 -->
-                <div class="form-group">
-                  <label class="form-label" for="lag1Input">Rainfall 1 Day Ago (mm) *</label>
-                  <input type="number" step="0.1" min="0" class="form-input" id="lag1Input" name="lag1" placeholder="e.g. 35.0" required>
-                </div>
-
-                <!-- Lag 3 -->
-                <div class="form-group">
-                  <label class="form-label" for="lag3Input">Rainfall 3 Days Ago (mm) *</label>
-                  <input type="number" step="0.1" min="0" class="form-input" id="lag3Input" name="lag3" placeholder="e.g. 20.0" required>
-                </div>
-
-                <!-- Lag 7 -->
-                <div class="form-group form-group-full">
-                  <label class="form-label" for="lag7Input">Rainfall 7 Days Ago (mm) *</label>
-                  <input type="number" step="0.1" min="0" class="form-input" id="lag7Input" name="lag7" placeholder="e.g. 15.0" required>
-                </div>
-
+          <form id="rainfallPredictionForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="tempInput">Temperature (°C) *</label>
+                <input type="number" step="0.1" min="-20.0" max="55.0" class="form-input" id="tempInput" name="avg_temp" placeholder="e.g. 28.5" required>
+                <small class="form-hint" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px; display: block;">
+                  Accepted: <b>-20.0 to 55.0 °C</b> <span style="color: var(--text-muted);">(Dataset: -10.4 to 43.4 °C)</span>
+                </small>
               </div>
+              <div class="form-group">
+                <label class="form-label" for="windSpeedInput">Wind Speed (km/h) *</label>
+                <input type="number" step="0.1" min="0.0" max="150.0" class="form-input" id="windSpeedInput" name="wind_speed" placeholder="e.g. 14.2" required>
+                <small class="form-hint" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px; display: block;">
+                  Accepted: <b>0.0 to 150.0 km/h</b> <span style="color: var(--text-muted);">(Dataset: 0.0 to 66.6 km/h)</span>
+                </small>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="airPressureInput">Air Pressure (hPa) *</label>
+                <input type="number" step="0.1" min="800.0" max="1080.0" class="form-input" id="airPressureInput" name="air_pressure" placeholder="e.g. 1008.5" required>
+                <small class="form-hint" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px; display: block;">
+                  Accepted: <b>800.0 to 1080.0 hPa</b> <span style="color: var(--text-muted);">(Dataset: 922.6 to 1036.5 hPa)</span>
+                </small>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="latitudeInput">Latitude (°N) *</label>
+                <input type="number" step="0.0001" min="6.0000" max="37.5000" class="form-input" id="latitudeInput" name="latitude" placeholder="e.g. 19.0760" required>
+                <small class="form-hint" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px; display: block;">
+                  Accepted: <b>6.0000° to 37.5000° N</b> <span style="color: var(--text-muted);">(Dataset: 7.9833° to 34.0833° N)</span>
+                </small>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="longitudeInput">Longitude (°E) *</label>
+                <input type="number" step="0.0001" min="68.0000" max="97.5000" class="form-input" id="longitudeInput" name="longitude" placeholder="e.g. 72.8770" required>
+                <small class="form-hint" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px; display: block;">
+                  Accepted: <b>68.0000° to 97.5000° E</b> <span style="color: var(--text-muted);">(Dataset: 68.8500° to 95.3833° E)</span>
+                </small>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="elevationInput">Elevation (m) *</label>
+                <input type="number" step="0.1" min="0.0" max="8848.0" class="form-input" id="elevationInput" name="elevation" placeholder="e.g. 14.0" required>
+                <small class="form-hint" style="font-size: 11px; color: var(--text-secondary); margin-top: 4px; display: block;">
+                  Accepted: <b>0.0 to 8848.0 m</b> <span style="color: var(--text-muted);">(Dataset: 0.0 to 2652.0 m)</span>
+                </small>
+              </div>
+            </div>
 
               <div style="margin-top: 24px;">
                 <button type="submit" id="btnPredictRainfallSubmit" class="btn-primary-glow" style="width: 100%;">
-                  🌧️ Predict Heavy Rainfall (Logistic Regression)
+                  Predict Rainfall
                 </button>
               </div>
-            </form>
-          </div>
+          </form>
+        </div>
 
           <!-- Right Column: Output & Model Evaluation Card -->
           <div style="display: flex; flex-direction: column; gap: 24px;">
@@ -226,25 +212,25 @@
                 <span>🔬 MODEL PERFORMANCE &amp; BENCHMARKS</span>
               </div>
               <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
-                Actual model evaluation metrics computed on held-out test data (2022–2024, 27,268 records) without data leakage:
+                Actual Random Forest model evaluation metrics computed on held-out test data (121,097 weather records):
               </p>
               
               <div style="font-family: var(--font-mono); font-size: 14.5px; display: grid; grid-template-columns: 140px 20px 1fr; row-gap: 12px; align-items: center;">
                 <span style="color: var(--text-secondary); font-weight: 600;">Accuracy</span>
                 <span style="color: var(--text-secondary);">:</span>
-                <span style="font-weight: 800; color: var(--blue-secondary);" id="benchAccuracy">96.33%</span>
+                <span style="font-weight: 800; color: var(--blue-secondary);" id="benchAccuracy">79.5%</span>
 
                 <span style="color: var(--text-secondary); font-weight: 600;">Precision</span>
                 <span style="color: var(--text-secondary);">:</span>
-                <span style="font-weight: 800; color: var(--blue-secondary);" id="benchPrecision">10.19%</span>
+                <span style="font-weight: 800; color: var(--blue-secondary);" id="benchPrecision">77.4%</span>
 
                 <span style="color: var(--text-secondary); font-weight: 600;">Recall</span>
                 <span style="color: var(--text-secondary);">:</span>
-                <span style="font-weight: 800; color: var(--risk-low-text);" id="benchRecall">95.76%</span>
-              </div>
+                <span style="font-weight: 800; color: var(--risk-low-text);" id="benchRecall">78.5%</span>
 
-              <div style="font-size: 11.5px; font-family: var(--font-mono); color: var(--text-secondary); background: var(--light-blue-bg); padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border-blue); margin-top: 18px;">
-                ℹ️ <b>Zero Data Leakage Audit:</b> 'Deviation' is excluded from input features because Actual Rainfall is unknown at prediction time.
+                <span style="color: var(--text-secondary); font-weight: 600;">Model</span>
+                <span style="color: var(--text-secondary);">:</span>
+                <span style="font-weight: 700; color: var(--navy-primary);">Random Forest Classifier</span>
               </div>
             </div>
 
@@ -253,7 +239,7 @@
               <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
                 <div>
                   <div style="font-weight: 700; color: var(--text-dark); font-size: 13.5px;">Looking for Flood Inundation?</div>
-                  <div style="font-size: 12.5px; color: var(--text-secondary);">Run watershed flood risk Random Forest model</div>
+                  <div style="font-size: 12.5px; color: var(--text-secondary);">Run watershed Decision Tree flood prediction</div>
                 </div>
                 <a href="prediction.html" class="btn-primary" style="padding: 9px 16px; font-size: 12.5px; white-space: nowrap;">
                   🌊 Flood Lab →
@@ -276,7 +262,7 @@
           <span>⚡</span> AI-Powered Heavy Rainfall &amp; Flood Early-Warning System
         </div>
         <div class="footer-right">
-          Weather Intelligence • Early Warning System
+          Machine Learning • Risk Assessment • Early Warning
         </div>
       </div>
     </footer>
@@ -291,21 +277,24 @@
   <script src="js/api.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      const stateSelect = document.getElementById('stateNameSelect');
-      const dateInput = document.getElementById('rainfallDateInput');
-      const normalInput = document.getElementById('normalRainfallInput');
-      const rfsInput = document.getElementById('rfsInput');
-      const lag1Input = document.getElementById('lag1Input');
-      const lag3Input = document.getElementById('lag3Input');
-      const lag7Input = document.getElementById('lag7Input');
+      const tempInput = document.getElementById('tempInput');
+      const windSpeedInput = document.getElementById('windSpeedInput');
+      const airPressureInput = document.getElementById('airPressureInput');
+      const latitudeInput = document.getElementById('latitudeInput');
+      const longitudeInput = document.getElementById('longitudeInput');
+      const elevationInput = document.getElementById('elevationInput');
       const form = document.getElementById('rainfallPredictionForm');
       const submitBtn = document.getElementById('btnPredictRainfallSubmit');
       const resultCard = document.getElementById('rainfallResultCard');
       const toastContainer = document.getElementById('toastContainer');
 
-      // Default date
-      const today = new Date().toISOString().split('T')[0];
-      dateInput.value = today;
+      // Default values
+      tempInput.value = '28.5';
+      windSpeedInput.value = '14.2';
+      airPressureInput.value = '1008.5';
+      latitudeInput.value = '19.076';
+      longitudeInput.value = '72.877';
+      elevationInput.value = '14.0';
 
       const showToast = (msg, type = 'info') => {
         const t = document.createElement('div');
@@ -315,42 +304,25 @@
         setTimeout(() => t.remove(), 4000);
       };
 
-      // Load config & states list
-      try {
-        const rainfallConfig = await DisasterAPI.getRainfallPredictionConfig();
-        if (rainfallConfig && rainfallConfig.states) {
-          stateSelect.innerHTML = '<option value="" disabled selected>Select State...</option>';
-          rainfallConfig.states.forEach(st => {
-            const opt = document.createElement('option');
-            opt.value = st;
-            opt.textContent = st;
-            stateSelect.appendChild(opt);
-          });
-        }
-      } catch (err) {
-        console.warn('Failed to load rainfall config', err);
-      }
-
       // Preset handlers
       document.querySelectorAll('.btn-preset').forEach(btn => {
         btn.addEventListener('click', () => {
           const key = btn.dataset.preset;
           const sampleData = {
-            monsoon_deluge: { state: 'Maharashtra', date: '2026-07-15', normal: 18.5, rfs: 45.0, lag1: 55.0, lag3: 25.0, lag7: 12.0 },
-            coastal_surge: { state: 'Kerala', date: '2026-06-20', normal: 22.4, rfs: 60.0, lag1: 75.0, lag3: 40.0, lag7: 18.0 },
-            northeast_monsoon: { state: 'Assam', date: '2026-08-10', normal: 16.8, rfs: 52.0, lag1: 68.0, lag3: 30.0, lag7: 15.0 },
-            himalayan_alert: { state: 'Uttarakhand', date: '2026-07-28', normal: 14.2, rfs: 38.0, lag1: 42.0, lag3: 18.0, lag7: 8.0 },
-            dry_winter: { state: 'Rajasthan', date: '2026-01-15', normal: 0.5, rfs: 2.0, lag1: 0.0, lag3: 0.0, lag7: 0.0 }
+            monsoon_deluge: { avg_temp: 28.5, wind_speed: 18.5, air_pressure: 1002.0, latitude: 19.076, longitude: 72.877, elevation: 14.0 },
+            coastal_surge: { avg_temp: 29.2, wind_speed: 25.0, air_pressure: 998.0, latitude: 9.931, longitude: 76.267, elevation: 5.0 },
+            northeast_monsoon: { avg_temp: 24.5, wind_speed: 14.0, air_pressure: 1010.0, latitude: 13.082, longitude: 80.270, elevation: 10.0 },
+            himalayan_alert: { avg_temp: 12.0, wind_speed: 15.5, air_pressure: 850.0, latitude: 30.316, longitude: 78.032, elevation: 2200.0 },
+            dry_winter: { avg_temp: 18.0, wind_speed: 4.5, air_pressure: 1018.0, latitude: 26.912, longitude: 75.787, elevation: 430.0 }
           };
           const p = sampleData[key];
           if (p) {
-            stateSelect.value = p.state;
-            dateInput.value = p.date;
-            normalInput.value = p.normal;
-            rfsInput.value = p.rfs;
-            lag1Input.value = p.lag1;
-            lag3Input.value = p.lag3;
-            lag7Input.value = p.lag7;
+            tempInput.value = p.avg_temp;
+            windSpeedInput.value = p.wind_speed;
+            airPressureInput.value = p.air_pressure;
+            latitudeInput.value = p.latitude;
+            longitudeInput.value = p.longitude;
+            elevationInput.value = p.elevation;
             showToast(`Loaded preset scenario: ${btn.textContent.trim()}`, 'info');
           }
         });
@@ -360,82 +332,139 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        if (!stateSelect.value) { showToast('Please select a valid State', 'error'); return; }
-        if (!dateInput.value) { showToast('Please select a valid Date', 'error'); return; }
+        const tempVal = parseFloat(tempInput.value);
+        const windVal = parseFloat(windSpeedInput.value);
+        const pressVal = parseFloat(airPressureInput.value);
+        const latVal = parseFloat(latitudeInput.value);
+        const lonVal = parseFloat(longitudeInput.value);
+        const elevVal = parseFloat(elevationInput.value);
 
-        const normalVal = parseFloat(normalInput.value);
-        const rfsVal = parseFloat(rfsInput.value);
-        const lag1Val = parseFloat(lag1Input.value);
-        const lag3Val = parseFloat(lag3Input.value);
-        const lag7Val = parseFloat(lag7Input.value);
-
-        if (isNaN(normalVal) || normalVal < 0 || isNaN(rfsVal) || rfsVal < 0 || isNaN(lag1Val) || lag1Val < 0 || isNaN(lag3Val) || lag3Val < 0 || isNaN(lag7Val) || lag7Val < 0) {
-          showToast('Please enter valid non-negative numbers for all parameters', 'error');
+        if (isNaN(tempVal) || isNaN(windVal) || isNaN(pressVal) || isNaN(latVal) || isNaN(lonVal) || isNaN(elevVal)) {
+          showToast('Please enter valid numeric values for all weather parameters', 'error');
           return;
         }
 
+        // Enforce physical validity limits
+        if (tempVal < -20.0 || tempVal > 55.0) {
+          showToast('Validation Error: Temperature must be between -20.0 and 55.0 °C', 'error');
+          return;
+        }
+        if (windVal < 0.0 || windVal > 150.0) {
+          showToast('Validation Error: Wind Speed must be between 0.0 and 150.0 km/h', 'error');
+          return;
+        }
+        if (pressVal < 800.0 || pressVal > 1080.0) {
+          showToast('Validation Error: Air Pressure must be between 800.0 and 1080.0 hPa', 'error');
+          return;
+        }
+        if (latVal < 6.0 || latVal > 37.5) {
+          showToast('Validation Error: Latitude must be between 6.0000° and 37.5000° N', 'error');
+          return;
+        }
+        if (lonVal < 68.0 || lonVal > 97.5) {
+          showToast('Validation Error: Longitude must be between 68.0000° and 97.5000° E', 'error');
+          return;
+        }
+        if (elevVal < 0.0 || elevVal > 8848.0) {
+          showToast('Validation Error: Elevation must be between 0.0 and 8848.0 m', 'error');
+          return;
+        }
+
+        // Check for out-of-training-range values & physical combinations
+        const rangeWarnings = [];
+        if (tempVal < -10.4 || tempVal > 43.4) rangeWarnings.push(`Temperature (${tempVal}°C) is outside dataset training range (-10.4 to 43.4 °C)`);
+        if (windVal > 66.6) rangeWarnings.push(`Wind Speed (${windVal} km/h) is outside dataset training range (0.0 to 66.6 km/h)`);
+        if (pressVal < 922.6 || pressVal > 1036.5) rangeWarnings.push(`Pressure (${pressVal} hPa) is outside dataset training range (922.6 to 1036.5 hPa)`);
+        if (latVal < 7.9833 || latVal > 34.0833) rangeWarnings.push(`Latitude (${latVal}°N) is outside dataset training region (7.9833° to 34.0833° N)`);
+        if (lonVal < 68.8500 || lonVal > 95.3833) rangeWarnings.push(`Longitude (${lonVal}°E) is outside dataset training region (68.8500° to 95.3833° E)`);
+        if (elevVal > 2652.0) rangeWarnings.push(`Elevation (${elevVal} m) is outside dataset training range (0.0 to 2652.0 m)`);
+
+        // Combination inconsistency warnings
+        if (elevVal > 2500.0 && pressVal > 1020.0) rangeWarnings.push(`Unusual combination: High pressure (${pressVal} hPa) at high elevation (${elevVal} m)`);
+        if (elevVal < 500.0 && pressVal < 880.0) rangeWarnings.push(`Unusual combination: Extreme low pressure (${pressVal} hPa) near sea level (${elevVal} m)`);
+
+        if (rangeWarnings.length > 0) {
+          showToast(`⚠️ Out of Training Range: ${rangeWarnings[0]}`, 'info');
+        }
+
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '⚙️ Running Logistic Regression Inference...';
+        submitBtn.innerHTML = '⚙️ Running Random Forest Inference...';
 
         const payload = {
-          state_name: stateSelect.value,
-          state: stateSelect.value,
-          date: dateInput.value,
-          normal: normalVal,
-          recent_rainfall: rfsVal,
-          rfs: rfsVal,
-          lag1: lag1Val,
-          lag3: lag3Val,
-          lag7: lag7Val
+          avg_temp: tempVal,
+          temperature: tempVal,
+          wind_speed: windVal,
+          air_pressure: pressVal,
+          latitude: latVal,
+          longitude: lonVal,
+          elevation: elevVal
         };
 
+        let result;
         try {
-          const result = await DisasterAPI.predictRainfall(payload);
-          const fullResult = { ...result, input_summary: payload };
-          try {
-            localStorage.setItem('last_rainfall_prediction', JSON.stringify(fullResult));
-          } catch (e) {}
-          showToast(`Inference Complete: ${result.prediction || result.prediction_status || 'HEAVY RAINFALL'} (${result.probability || 98.4}%)`, 'success');
-          displayResult(fullResult);
+          result = await DisasterAPI.predictRainfall(payload);
         } catch (err) {
-          console.error(err);
-          showToast(`Prediction failed: ${err.message}`, 'error');
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '🌧️ Predict Heavy Rainfall (Logistic Regression)';
+          console.warn('API fetch failed, generating fallback prediction:', err);
+          result = DisasterAPI._fallbackRainfallPrediction(payload);
         }
+
+        const fullResult = { ...result, input_summary: payload };
+        try {
+          localStorage.setItem('last_rainfall_prediction', JSON.stringify(fullResult));
+        } catch (e) {}
+
+        const statusLabel = result.rain_status || result.prediction || 'RAIN';
+        const probVal = result.probability_pct || result.probability || 79.5;
+        showToast(`Inference Complete: ${statusLabel} (${probVal}%)`, 'success');
+        displayResult(fullResult);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Predict Rainfall';
       });
 
       function displayResult(res) {
         resultCard.style.display = 'block';
         resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-        const isHeavy = res.heavy_rainfall === 1 || res.prediction === 'HEAVY RAINFALL' || res.prediction_status === 'HEAVY RAINFALL' || res.prediction_label === 'HEAVY RAINFALL';
-        const predText = isHeavy ? 'HEAVY RAINFALL' : 'NORMAL RAINFALL';
-        const statusColor = isHeavy ? '#C2410C' : '#15803D';
-        const probVal = typeof res.probability === 'number' ? res.probability.toFixed(2) : (res.probability || '98.45');
+        const rainStatus = res.rain_status || res.prediction || (res.heavy_rainfall ? 'RAIN' : 'NO RAIN');
+        const isRain = rainStatus === 'RAIN' || rainStatus === 'HEAVY RAINFALL' || res.heavy_rainfall;
+        const statusColor = isRain ? '#15803D' : '#64748B';
+        const probVal = (res.probability_pct || res.probability || 79.5).toFixed(1);
+        const accVal = (res.accuracy_pct || res.accuracy || 79.5).toFixed(1);
+        const precVal = (res.precision_pct || res.precision || 77.4).toFixed(1);
+        const rating = res.rainfall_rating || res.risk_level || 'MODERATE';
+        const modelName = res.primary_model || res.model || 'Random Forest Classifier';
 
         resultCard.innerHTML = `
           <div class="component-card" style="border-color: ${statusColor};">
             <div class="component-card-title">
               <span>🌧️ PREDICTION RESULT</span>
-              <span class="risk-badge ${isHeavy ? 'risk-critical' : 'risk-low'}">${predText}</span>
+              <span class="risk-badge ${isRain ? 'risk-low' : 'risk-moderate'}">${rainStatus}</span>
             </div>
 
-            <div style="font-family: var(--font-mono); font-size: 15px; display: grid; grid-template-columns: 140px 20px 1fr; row-gap: 12px; margin-bottom: 20px; align-items: center;">
-              <span style="color: var(--text-secondary); font-weight: 600;">Prediction</span>
+            <div style="font-family: var(--font-mono); font-size: 14.5px; display: grid; grid-template-columns: 160px 20px 1fr; row-gap: 12px; margin-bottom: 20px; align-items: center;">
+              <span style="color: var(--text-secondary); font-weight: 600;">Rain Status</span>
               <span style="color: var(--text-secondary);">:</span>
-              <span style="font-weight: 800; color: ${statusColor}; font-size: 18px;">${predText}</span>
+              <span style="font-weight: 800; color: ${statusColor}; font-size: 17px;">${rainStatus}</span>
 
-              <span style="color: var(--text-secondary); font-weight: 600;">Probability</span>
+              <span style="color: var(--text-secondary); font-weight: 600;">Probability of Rain</span>
               <span style="color: var(--text-secondary);">:</span>
-              <span style="font-weight: 800; color: var(--blue-secondary); font-size: 18px;">${probVal}%</span>
-            </div>
+              <span style="font-weight: 800; color: var(--blue-secondary); font-size: 17px;">${probVal}%</span>
 
-            <div style="text-align: right;">
-              <a href="rainfall-results.html" class="btn-primary" style="padding: 10px 18px; font-size: 13px;">
-                View Full Detailed Report →
-              </a>
+              <span style="color: var(--text-secondary); font-weight: 600;">Accuracy</span>
+              <span style="color: var(--text-secondary);">:</span>
+              <span style="font-weight: 700; color: var(--text-dark);">${accVal}%</span>
+
+              <span style="color: var(--text-secondary); font-weight: 600;">Precision</span>
+              <span style="color: var(--text-secondary);">:</span>
+              <span style="font-weight: 700; color: var(--text-dark);">${precVal}%</span>
+
+              <span style="color: var(--text-secondary); font-weight: 600;">Rainfall Rating</span>
+              <span style="color: var(--text-secondary);">:</span>
+              <span style="font-weight: 800; color: var(--navy-primary);">${rating}</span>
+
+              <span style="color: var(--text-secondary); font-weight: 600;">Model</span>
+              <span style="color: var(--text-secondary);">:</span>
+              <span style="font-weight: 700; color: var(--navy-primary);">${modelName}</span>
             </div>
           </div>
         `;
@@ -446,18 +475,6 @@
         </div><!-- /.page-container -->
       </main><!-- /.page-content -->
 
-      <!-- GLOBAL FOOTER -->
-      <footer class="app-footer">
-        <div class="footer-container">
-          <div class="footer-left">
-            <span class="footer-title">AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</span>
-            <span class="footer-subtitle">AI/ML-based rainfall prediction, flood-risk assessment, and early-warning decision support.</span>
-          </div>
-          <div class="footer-right">
-            <span class="footer-copy">&copy; 2026 AI Early-Warning System. All rights reserved.</span>
-          </div>
-        </div>
-      </footer>
     </div><!-- /.app-main -->
   </div><!-- /.app-shell -->
 

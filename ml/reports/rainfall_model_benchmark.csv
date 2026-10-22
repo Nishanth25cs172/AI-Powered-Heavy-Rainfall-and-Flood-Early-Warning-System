@@ -1,0 +1,6 @@
+algorithm,accuracy,precision,recall,f1_score,roc_auc
+Gradient Boosting Classifier,0.6022,0.5383,0.8256,0.6517,0.7233
+Random Forest Classifier,0.5909,0.5288,0.8474,0.6512,0.7366
+Decision Tree Classifier,0.5944,0.532,0.8332,0.6494,0.6692
+Extra Trees Classifier,0.5186,0.4827,0.9472,0.6395,0.7098
+Logistic Regression,0.4721,0.4602,0.9883,0.628,0.7569

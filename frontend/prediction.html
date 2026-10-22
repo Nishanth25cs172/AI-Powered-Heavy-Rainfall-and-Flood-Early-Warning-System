@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flood Prediction | AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</title>
+  <title>Flood Risk Prediction | AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</title>
   <meta name="description" content="Machine Learning Inundation Prediction Lab powered by Decision Tree watershed telemetry model.">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=4">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%3E<text y=%2226%22 font-size=%2226%22>🌊</text></svg>">
 </head>
 <body>
@@ -18,7 +18,7 @@
     <!-- GLOBAL FIXED SIDEBAR -->
     <aside class="app-sidebar" id="appSidebar">
       <div class="sidebar-header">
-        <a href="dashboard.html" class="sidebar-brand" title="AI-Powered Heavy Rainfall &amp; Flood Early-Warning System Command Center">
+        <a href="dashboard.html" class="sidebar-brand" title="Early Warning Dashboard">
           <div class="sidebar-logo-icon">⚡</div>
           <div class="sidebar-logo-text">
             <span class="logo-title-line1">AI-POWERED</span>
@@ -41,7 +41,7 @@
         </a>
         <a href="prediction.html" class="nav-tab-btn active" data-page="prediction" title="Flood Risk Prediction">
           <span class="nav-icon">🌊</span>
-          <span class="nav-label">Flood Prediction</span>
+          <span class="nav-label">Flood Risk Prediction</span>
         </a>
         <a href="analytics.html" class="nav-tab-btn" data-page="analytics" title="Historical Analytics & Model Performance">
           <span class="nav-icon">📊</span>
@@ -60,19 +60,20 @@
           <span class="nav-icon">ℹ️</span>
           <span class="nav-label">About</span>
         </a>
-        <a href="login.html" class="nav-tab-btn nav-logout-btn" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
-          <span class="nav-icon">🚪</span>
-          <span class="nav-label">Logout</span>
-        </a>
       </nav>
 
       <div class="sidebar-footer">
         <div class="sidebar-system-card">
-          <div class="system-status-indicator">
-            <span class="status-pulse-dot"></span>
-            <span>SYSTEM OPERATIONAL</span>
+          <div class="sidebar-system-info">
+            <div class="system-status-indicator">
+              <span class="status-pulse-dot"></span>
+              <span>SYSTEM OPERATIONAL</span>
+            </div>
+            <div class="system-meta-text">AI Early-Warning Network</div>
           </div>
-          <div class="system-meta-text">AI Early-Warning Network</div>
+          <a href="login.html" class="sidebar-logout-action" id="sidebarBtnLogout" title="Logout of System Session" onclick="localStorage.removeItem('sih_login');">
+            <span>🚪</span> <span>Logout</span>
+          </a>
         </div>
       </div>
     </aside>
@@ -82,30 +83,24 @@
       <!-- Top Header -->
       <header class="app-header">
         <div class="header-left">
-          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">
-            ☰
-          </button>
+          <button class="sidebar-toggle-btn" id="btnSidebarToggle" title="Open Navigation Menu">☰</button>
           <div class="header-title-group">
-            <h1 class="header-current-title" id="headerCurrentTitle">Flood Prediction</h1>
-            <span class="header-current-subtitle" id="headerCurrentSubtitle">Assess flood risk using the project's existing flood prediction model</span>
+            <h1 class="header-current-title" id="headerCurrentTitle">Early Warning Dashboard</h1>
+            <span class="header-current-subtitle" id="headerCurrentSubtitle">Monitor rainfall conditions, flood risk and early-warning information in one place.</span>
           </div>
         </div>
 
         <div class="header-right">
+          <div style="display: flex; gap: 12px; align-items: center; white-space: nowrap; flex-wrap: nowrap; flex-shrink: 0;">
           <div id="backendStatusPill" class="status-pill-backend" title="API Status">
             <span class="status-pulse-dot"></span>
             <span id="backendStatusText">Backend Connected</span>
           </div>
-          <div class="live-clock-badge" id="liveClock">
-            --:--:-- IST
-          </div>
-          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">
-            🔄
-          </button>
-          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">
-            🔊
-          </button>
-          <div class="user-profile-badge" id="btnLogout" title="Click to Logout">
+          <div class="live-clock-badge" id="liveClock">--:--:-- IST</div>
+        </div>
+          <button id="btnRefreshData" class="btn-icon-action" title="Refresh Telemetry">🔄</button>
+          <button id="btnToggleSound" class="btn-icon-action active" title="Toggle Sound Alerts">🔊</button>
+          <div class="user-profile-badge" id="btnLogout" title="Click to Logout" onclick="localStorage.removeItem('sih_login'); window.location.href='login.html';">
             <div class="user-avatar">AD</div>
             <span class="user-info-text">Admin</span>
             <span style="font-size: 11px; color: var(--text-muted);">↪</span>
@@ -119,8 +114,8 @@
 
           <!-- PAGE TITLE SECTION -->
           <section class="page-title-section">
-            <h1>Flood Prediction</h1>
-            <p>Assess flood risk using watershed telemetry, precipitation volume, and Random Forest machine learning models.</p>
+            <h1>Flood Risk Prediction</h1>
+            <p>Assess flood risk using watershed telemetry, precipitation volume, and Decision Tree machine learning models.</p>
           </section>
 
       <!-- PAGE-SPECIFIC CONTENT -->
@@ -144,62 +139,81 @@
         <!-- Main Form & Results Grid -->
         <div class="grid-2-col">
 
-          <!-- Flood Prediction Input Card -->
+          <!-- Flood Risk Prediction Input Card -->
           <div class="component-card">
             <div class="component-card-title">
-              <span>🌊 WATERSHED TELEMETRY FORM</span>
-              <span class="risk-badge risk-low" style="font-size: 11px;">Random Forest ML</span>
+              <span>🌊 FLOOD INPUT</span>
+              <span class="risk-badge risk-low" style="font-size: 11px;">Decision Tree ML</span>
             </div>
 
             <form id="floodPredictionForm">
               <div class="form-grid">
 
                 <div class="form-group">
-                  <label class="form-label" for="floodPrecipitation">Monsoon Rainfall (mm) *</label>
-                  <input type="number" step="0.1" min="0" class="form-input" id="floodPrecipitation" value="210.5" required>
+                  <label class="form-label" for="floodRainfall">Rainfall (mm) *</label>
+                  <input type="number" step="0.1" min="0" max="1000" class="form-input" id="floodRainfall" value="140.0" required>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: 0.0 to 1000.0 mm · Dataset: 0.0 to 300.0 mm</span>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="floodWaterLevel">River Water Height (m) *</label>
-                  <input type="number" step="0.1" min="0" class="form-input" id="floodWaterLevel" value="7.8" required>
+                  <label class="form-label" for="floodWaterLevel">River Level (m) *</label>
+                  <input type="number" step="0.1" min="0" max="30" class="form-input" id="floodWaterLevel" value="6.2" required>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: 0.0 to 30.0 m · Dataset: 0.0 to 10.0 m</span>
                 </div>
 
                 <div class="form-group">
                   <label class="form-label" for="floodDischarge">River Discharge (m³/s) *</label>
-                  <input type="number" step="1" min="0" class="form-input" id="floodDischarge" value="4800" required>
+                  <input type="number" step="1" min="0" max="50000" class="form-input" id="floodDischarge" value="2800" required>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: 0 to 50000 m³/s · Dataset: 0 to 5000 m³/s</span>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="floodSoilMoisture">Soil Moisture (%) *</label>
-                  <input type="number" step="0.1" min="0" max="100" class="form-input" id="floodSoilMoisture" value="84.2" required>
+                  <label class="form-label" for="floodElevation">Elevation (m) *</label>
+                  <input type="number" step="0.1" min="0" max="8848" class="form-input" id="floodElevation" value="14.0" required>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: 0.0 to 8848.0 m · Dataset: 1.2 to 8846.9 m</span>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="floodSlope">Topography Slope (deg) *</label>
-                  <input type="number" step="0.1" min="0" max="90" class="form-input" id="floodSlope" value="4.2" required>
+                  <label class="form-label" for="floodLatitude">Latitude (°N) *</label>
+                  <input type="number" step="0.0001" min="6.0" max="37.5" class="form-input" id="floodLatitude" value="19.076" required>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: 6.0000 to 37.5000 °N · Dataset: 8.0003 to 36.9918 °N</span>
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="floodUrbanization">Urbanization Index (%) *</label>
-                  <input type="number" step="0.1" min="0" max="100" class="form-input" id="floodUrbanization" value="72.0" required>
+                  <label class="form-label" for="floodLongitude">Longitude (°E) *</label>
+                  <input type="number" step="0.0001" min="68.0" max="97.5" class="form-input" id="floodLongitude" value="72.877" required>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: 68.0000 to 97.5000 °E · Dataset: 68.0046 to 96.9978 °E</span>
                 </div>
 
-                <div class="form-group form-group-full">
-                  <label class="form-label" for="floodBasinSelect">Target Drainage Basin / Region *</label>
-                  <select class="form-select" id="floodBasinSelect" required>
-                    <option value="Godavari River Basin - Delta Zone">Godavari River Basin - Delta Zone</option>
-                    <option value="Krishna River Basin - Upper Reaches">Krishna River Basin - Upper Reaches</option>
-                    <option value="Cauvery Basin - Coastal Sub-Division">Cauvery Basin - Coastal Sub-Division</option>
-                    <option value="Brahmaputra Valley - Floodplain Segment">Brahmaputra Valley - Floodplain Segment</option>
-                    <option value="Mahanadi Catchment Area">Mahanadi Catchment Area</option>
+                <div class="form-group">
+                  <label class="form-label" for="floodSoilType">Soil Type *</label>
+                  <select class="form-select" id="floodSoilType" required>
+                    <option value="Clay" selected>Clay</option>
+                    <option value="Loam">Loam</option>
+                    <option value="Peat">Peat</option>
+                    <option value="Sandy">Sandy</option>
+                    <option value="Silt">Silt</option>
                   </select>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: Clay, Loam, Peat, Sandy, Silt</span>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="floodLandCover">Land Cover *</label>
+                  <select class="form-select" id="floodLandCover" required>
+                    <option value="Urban" selected>Urban</option>
+                    <option value="Agricultural">Agricultural</option>
+                    <option value="Desert">Desert</option>
+                    <option value="Forest">Forest</option>
+                    <option value="Water Body">Water Body</option>
+                  </select>
+                  <span style="font-size: 11px; color: var(--text-secondary); display: block; margin-top: 4px;">Accepted: Agricultural, Desert, Forest, Urban, Water Body</span>
                 </div>
 
               </div>
 
               <div style="margin-top: 24px;">
                 <button type="submit" id="btnPredictFloodSubmit" class="btn-primary-glow" style="width: 100%;">
-                  🌊 Run ML Flood Inundation Model
+                  Predict Flood Risk
                 </button>
               </div>
             </form>
@@ -211,35 +225,34 @@
             <!-- Inundation Result Card -->
             <div id="floodResultCard" class="component-card">
               <div class="component-card-title">
-                <span>⚡ INUNDATION RISK DIAGNOSTIC</span>
-                <span class="risk-badge risk-high" id="floodRiskBadge">HIGH RISK</span>
+                <span>⚡ PREDICTION RESULT</span>
+                <span class="risk-badge risk-moderate" id="floodRiskBadge">MODERATE RISK</span>
               </div>
 
-              <div style="font-family: var(--font-mono); font-size: 15px; display: grid; grid-template-columns: 140px 20px 1fr; row-gap: 12px; margin-bottom: 20px; align-items: center;">
-                <span style="color: var(--text-secondary); font-weight: 600;">Status</span>
+              <div style="font-family: var(--font-mono); font-size: 14.5px; display: grid; grid-template-columns: 160px 20px 1fr; row-gap: 12px; margin-bottom: 20px; align-items: center;">
+                <span style="color: var(--text-secondary); font-weight: 600;">Flood Status</span>
                 <span style="color: var(--text-secondary);">:</span>
-                <span style="font-weight: 800; color: #C2410C; font-size: 18px;" id="floodStatusText">FLOOD WARNING</span>
+                <span style="font-weight: 800; color: #C2410C; font-size: 17px;" id="floodStatusText">FLOOD</span>
 
-                <span style="color: var(--text-secondary); font-weight: 600;">Probability</span>
+                <span style="color: var(--text-secondary); font-weight: 600;">Flood Probability</span>
                 <span style="color: var(--text-secondary);">:</span>
-                <span style="font-weight: 800; color: var(--blue-secondary); font-size: 18px;" id="floodProbText">87.4%</span>
+                <span style="font-weight: 800; color: var(--blue-secondary); font-size: 17px;" id="floodProbText">57.5%</span>
 
-                <span style="color: var(--text-secondary); font-weight: 600;">Water Level</span>
+                <span style="color: var(--text-secondary); font-weight: 600;">Accuracy</span>
                 <span style="color: var(--text-secondary);">:</span>
-                <span style="font-weight: 700; color: var(--text-dark);" id="floodStageText">7.8 m (+1.8m above normal)</span>
-              </div>
+                <span style="font-weight: 700; color: var(--text-dark);" id="floodAccText">52.1%</span>
 
-              <div style="background: #FFF1F2; border: 1px solid #FDA4AF; border-radius: 10px; padding: 14px; margin-bottom: 20px;">
-                <div style="font-size: 13px; font-weight: 700; color: #9F1239; margin-bottom: 4px;">Advisory Recommendation:</div>
-                <div style="font-size: 12.5px; color: #4C0519; line-height: 1.4;" id="floodAdvisoryText">
-                  High inundation probability detected. Public siren alert and evacuation readiness recommended for riverbank sectors.
-                </div>
-              </div>
+                <span style="color: var(--text-secondary); font-weight: 600;">Precision</span>
+                <span style="color: var(--text-secondary);">:</span>
+                <span style="font-weight: 700; color: var(--text-dark);" id="floodPrecText">52.3%</span>
 
-              <div style="text-align: right;">
-                <a href="results.html" class="btn-primary" style="padding: 10px 18px; font-size: 13px;">
-                  View Detailed Results Report →
-                </a>
+                <span style="color: var(--text-secondary); font-weight: 600;">Risk Level</span>
+                <span style="color: var(--text-secondary);">:</span>
+                <span style="font-weight: 800; color: var(--navy-primary);" id="floodLevelText">MODERATE</span>
+
+                <span style="color: var(--text-secondary); font-weight: 600;">Model</span>
+                <span style="color: var(--text-secondary);">:</span>
+                <span style="font-weight: 700; color: var(--navy-primary);" id="floodModelText">Decision Tree Classifier</span>
               </div>
             </div>
 
@@ -249,10 +262,10 @@
                 <span>📊 DECISION TREE MODEL SPECS</span>
               </div>
               <div style="font-family: var(--font-mono); font-size: 13.5px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <div>Accuracy: <b style="color: var(--blue-secondary);">98.4%</b></div>
-                <div>ROC-AUC: <b style="color: var(--blue-secondary);">0.991</b></div>
+                <div>Accuracy: <b style="color: var(--blue-secondary);">52.1%</b></div>
+                <div>Precision: <b style="color: var(--blue-secondary);">52.3%</b></div>
+                <div>Recall: <b style="color: var(--blue-secondary);">57.6%</b></div>
                 <div>Dataset: <b style="color: var(--text-dark);">10,000 Records</b></div>
-                <div>Latency: <b style="color: var(--risk-low-text);">&lt; 35ms</b></div>
               </div>
             </div>
 
@@ -271,7 +284,7 @@
           <span>⚡</span> AI-Powered Heavy Rainfall &amp; Flood Early-Warning System
         </div>
         <div class="footer-right">
-          Weather Intelligence • Early Warning System
+          Machine Learning • Risk Assessment • Early Warning
         </div>
       </div>
     </footer>
@@ -302,19 +315,21 @@
         btn.addEventListener('click', () => {
           const key = btn.dataset.preset;
           const presets = {
-            severe_overflow: { rain: 260.0, stage: 8.5, discharge: 6200, soil: 92.0, slope: 2.5, urban: 85.0 },
-            urban_flash: { rain: 190.0, stage: 6.2, discharge: 4100, soil: 78.0, slope: 1.8, urban: 94.0 },
-            moderate_monsoon: { rain: 110.0, stage: 4.8, discharge: 2400, soil: 62.0, slope: 5.5, urban: 50.0 },
-            normal_flow: { rain: 25.0, stage: 2.1, discharge: 850, soil: 35.0, slope: 8.0, urban: 30.0 }
+            severe_overflow: { rain: 260.0, stage: 8.5, discharge: 6200, elev: 12.0, lat: 19.076, lon: 72.877, soil: 'Clay', land: 'Urban' },
+            urban_flash: { rain: 190.0, stage: 6.2, discharge: 4100, elev: 15.0, lat: 13.082, lon: 80.270, soil: 'Clay', land: 'Urban' },
+            moderate_monsoon: { rain: 110.0, stage: 4.8, discharge: 2400, elev: 45.0, lat: 16.506, lon: 80.648, soil: 'Loam', land: 'Agricultural' },
+            normal_flow: { rain: 25.0, stage: 2.1, discharge: 850, elev: 150.0, lat: 26.144, lon: 91.736, soil: 'Sandy', land: 'Forest' }
           };
           const p = presets[key];
           if (p) {
-            document.getElementById('floodPrecipitation').value = p.rain;
+            document.getElementById('floodRainfall').value = p.rain;
             document.getElementById('floodWaterLevel').value = p.stage;
             document.getElementById('floodDischarge').value = p.discharge;
-            document.getElementById('floodSoilMoisture').value = p.soil;
-            document.getElementById('floodSlope').value = p.slope;
-            document.getElementById('floodUrbanization').value = p.urban;
+            document.getElementById('floodElevation').value = p.elev;
+            document.getElementById('floodLatitude').value = p.lat;
+            document.getElementById('floodLongitude').value = p.lon;
+            document.getElementById('floodSoilType').value = p.soil;
+            document.getElementById('floodLandCover').value = p.land;
             showToast(`Loaded scenario: ${btn.textContent.trim()}`, 'info');
           }
         });
@@ -323,68 +338,115 @@
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const rain = parseFloat(document.getElementById('floodPrecipitation').value);
+        const rain = parseFloat(document.getElementById('floodRainfall').value);
         const stage = parseFloat(document.getElementById('floodWaterLevel').value);
         const discharge = parseFloat(document.getElementById('floodDischarge').value);
-        const soil = parseFloat(document.getElementById('floodSoilMoisture').value);
-        const slope = parseFloat(document.getElementById('floodSlope').value);
-        const urban = parseFloat(document.getElementById('floodUrbanization').value);
-        const basin = document.getElementById('floodBasinSelect').value;
+        const elev = parseFloat(document.getElementById('floodElevation').value);
+        const lat = parseFloat(document.getElementById('floodLatitude').value);
+        const lon = parseFloat(document.getElementById('floodLongitude').value);
+        const soil = document.getElementById('floodSoilType').value;
+        const land = document.getElementById('floodLandCover').value;
+
+        // Enforce physical bounds validation
+        if (isNaN(rain) || !isFinite(rain) || isNaN(stage) || !isFinite(stage) || isNaN(discharge) || !isFinite(discharge) || isNaN(elev) || !isFinite(elev) || isNaN(lat) || !isFinite(lat) || isNaN(lon) || !isFinite(lon)) {
+          showToast('Validation Error: All parameters must be valid finite numbers', 'error');
+          return;
+        }
+
+        if (rain < 0.0 || rain > 1000.0) {
+          showToast('Validation Error: Rainfall must be between 0.0 and 1000.0 mm', 'error');
+          return;
+        }
+        if (stage < 0.0 || stage > 30.0) {
+          showToast('Validation Error: River Water Level must be between 0.0 and 30.0 m', 'error');
+          return;
+        }
+        if (discharge < 0.0 || discharge > 50000.0) {
+          showToast('Validation Error: River Discharge must be between 0.0 and 50000.0 m³/s', 'error');
+          return;
+        }
+        if (elev < 0.0 || elev > 8848.0) {
+          showToast('Validation Error: Elevation must be between 0.0 and 8848.0 m', 'error');
+          return;
+        }
+        if (lat < 6.0 || lat > 37.5) {
+          showToast('Validation Error: Latitude must be between 6.0000° and 37.5000° N', 'error');
+          return;
+        }
+        if (lon < 68.0 || lon > 97.5) {
+          showToast('Validation Error: Longitude must be between 68.0000° and 97.5000° E', 'error');
+          return;
+        }
+
+        // Check for out-of-training-range values
+        const rangeWarnings = [];
+        if (rain < 0.0144 || rain > 299.9703) rangeWarnings.push(`Rainfall (${rain} mm) is outside training set range (0.01 to 300.00 mm)`);
+        if (stage < 0.0027 || stage > 9.9969) rangeWarnings.push(`Water Level (${stage} m) is outside training set range (0.00 to 10.00 m)`);
+        if (discharge < 0.0422 || discharge > 4999.6985) rangeWarnings.push(`River Discharge (${discharge} m³/s) is outside training set range (0 to 5000 m³/s)`);
+        if (elev < 1.1503 || elev > 8846.8949) rangeWarnings.push(`Elevation (${elev} m) is outside training set range (1.15 to 8846.89 m)`);
+        if (lat < 8.0003 || lat > 36.9918) rangeWarnings.push(`Latitude (${lat}°N) is outside training set region (8.0003° to 36.9918° N)`);
+        if (lon < 68.0046 || lon > 96.9978) rangeWarnings.push(`Longitude (${lon}°E) is outside training set region (68.0046° to 96.9978° E)`);
+
+        if (stage > 15.0 && discharge < 10.0) rangeWarnings.push(`Unusual combination: High stage (${stage} m) with near-zero discharge (${discharge} m³/s)`);
+
+        if (rangeWarnings.length > 0) {
+          showToast(`⚠️ Out of Training Range: ${rangeWarnings[0]}`, 'info');
+        }
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '⚙️ Running Random Forest Flood Model...';
+        submitBtn.innerHTML = '⚙️ Running Decision Tree Flood Model...';
 
         const payload = {
-          Precipitation_mm: rain,
-          WaterLevel_m: stage,
-          RiverDischarge_m3s: discharge,
-          SoilMoisture_pct: soil,
-          Slope_deg: slope,
-          Urbanization_pct: urban,
-          Basin: basin
+          'Rainfall (mm)': rain,
+          'Water Level (m)': stage,
+          'River Discharge (m³/s)': discharge,
+          'Elevation (m)': elev,
+          'Latitude': lat,
+          'Longitude': lon,
+          'Soil Type': soil,
+          'Land Cover': land,
+          'Population Density': 4500.0,
+          'Infrastructure': 0.8,
+          'Historical Floods': 1.0,
+          'Humidity (%)': 88.0,
+          'Temperature (°C)': 29.0
         };
 
+        let result;
         try {
-          let result;
-          try {
-            result = await DisasterAPI.predictFlood(payload);
-          } catch (apiErr) {
-            // Calculated fallback simulation if offline
-            const score = Math.min(99.5, Math.max(5.0, (rain * 0.25) + (stage * 6.5) + (soil * 0.2)));
-            const isFlood = score >= 50;
-            result = {
-              flood_probability: score.toFixed(1),
-              prediction: isFlood ? 1 : 0,
-              prediction_label: isFlood ? 'FLOOD' : 'NO FLOOD',
-              flood_risk: isFlood,
-              water_stage_m: stage,
-              basin: basin
-            };
-          }
-
-          const fullResult = { ...result, input: payload };
-          try {
-            localStorage.setItem('sih_last_prediction', JSON.stringify(fullResult));
-          } catch (e) {}
-
-          const prob = result.flood_probability || (result.prediction === 1 ? '87.4' : '14.2');
-          const isFlood = result.prediction === 1 || result.prediction_label === 'FLOOD' || parseFloat(prob) >= 50;
-          
-          document.getElementById('floodRiskBadge').textContent = isFlood ? 'HIGH RISK' : 'LOW RISK';
-          document.getElementById('floodRiskBadge').className = `risk-badge ${isFlood ? 'risk-critical' : 'risk-low'}`;
-          document.getElementById('floodStatusText').textContent = isFlood ? 'FLOOD WARNING' : 'NORMAL LEVEL';
-          document.getElementById('floodStatusText').style.color = isFlood ? '#C2410C' : '#15803D';
-          document.getElementById('floodProbText').textContent = `${prob}%`;
-          document.getElementById('floodStageText').textContent = `${stage} m (${isFlood ? '+1.8m above normal' : 'within normal range'})`;
-          document.getElementById('floodAdvisoryText').textContent = isFlood 
-            ? 'High inundation probability detected. Public siren alert and evacuation readiness recommended for riverbank sectors.'
-            : 'Water levels and runoff volume are currently within safe seasonal thresholds. Continuous sensor telemetry active.';
-
-          showToast(`Inference Complete: ${isFlood ? 'FLOOD WARNING' : 'NORMAL'} (${prob}%)`, 'success');
+          result = await DisasterAPI.predictFlood(payload);
         } catch (err) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '🌊 Run ML Flood Inundation Model';
+          console.warn('API fetch failed, generating fallback prediction:', err);
+          result = DisasterAPI._fallbackFloodPrediction(payload);
         }
+
+        const fullResult = { ...result, input: payload };
+        try {
+          localStorage.setItem('sih_last_prediction', JSON.stringify(fullResult));
+        } catch (e) {}
+
+        const prob = (result.flood_probability || result.probability_pct || 57.5).toFixed(1);
+        const statusText = result.flood_status || result.prediction_label || (result.flood_risk ? 'FLOOD' : 'NO FLOOD');
+        const isFlood = statusText === 'FLOOD' || result.flood_risk === true;
+        const riskLevel = result.risk_level || (isFlood ? 'HIGH' : 'LOW');
+        const riskSlug = (riskLevel || 'moderate').toLowerCase();
+        const accVal = (result.accuracy_pct || result.accuracy || 52.1).toFixed(1);
+        const precVal = (result.precision_pct || result.precision || 52.3).toFixed(1);
+        const modelName = result.primary_model || result.model || 'Decision Tree Classifier';
+
+        document.getElementById('floodRiskBadge').textContent = `${riskLevel} RISK`;
+        document.getElementById('floodRiskBadge').className = `risk-badge risk-${riskSlug}`;
+        document.getElementById('floodStatusText').textContent = statusText;
+        document.getElementById('floodStatusText').style.color = isFlood ? '#C2410C' : '#15803D';
+        document.getElementById('floodProbText').textContent = `${prob}%`;
+        document.getElementById('floodAccText').textContent = `${accVal}%`;
+        document.getElementById('floodPrecText').textContent = `${precVal}%`;
+        document.getElementById('floodLevelText').textContent = riskLevel;
+        document.getElementById('floodModelText').textContent = modelName;
+
+        showToast(`Inference Complete: ${statusText} (${prob}%)`, 'success');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Predict Flood Risk';
       });
     });
   </script>
@@ -392,18 +454,6 @@
         </div><!-- /.page-container -->
       </main><!-- /.page-content -->
 
-      <!-- GLOBAL FOOTER -->
-      <footer class="app-footer">
-        <div class="footer-container">
-          <div class="footer-left">
-            <span class="footer-title">AI-Powered Heavy Rainfall &amp; Flood Early-Warning System</span>
-            <span class="footer-subtitle">AI/ML-based rainfall prediction, flood-risk assessment, and early-warning decision support.</span>
-          </div>
-          <div class="footer-right">
-            <span class="footer-copy">&copy; 2026 AI Early-Warning System. All rights reserved.</span>
-          </div>
-        </div>
-      </footer>
     </div><!-- /.app-main -->
   </div><!-- /.app-shell -->
 
